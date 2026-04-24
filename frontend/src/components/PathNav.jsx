@@ -23,9 +23,23 @@ export default function PathNav({ paths, concepts, currentConceptId, onConceptSe
   return (
     <div className="w-80 flex-shrink-0 bg-white border-r border-slate-200 overflow-y-auto h-screen">
       <div className="p-6 border-b border-slate-200 bg-slate-50">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+        <button
+          onClick={() => onConceptSelect(null)}
+          className="w-full mb-4 flex items-center gap-3 p-3 rounded-lg hover:bg-white transition-colors group"
+        >
+          <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center group-hover:bg-blue-700 transition-colors">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+          </div>
+          <div className="text-left">
+            <div className="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">返回主页</div>
+            <div className="text-xs text-slate-500">LearningAI</div>
+          </div>
+        </button>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-slate-200 flex items-center justify-center">
+            <svg className="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
             </svg>
           </div>
