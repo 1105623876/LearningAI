@@ -107,7 +107,7 @@ export default function ConceptView({ conceptId }) {
               </div>
             </div>
           ) : (
-            <PracticeMode conceptId={conceptId} />
+            <PracticeMode conceptId={conceptId} concept={concept} />
           )}
         </div>
       </div>

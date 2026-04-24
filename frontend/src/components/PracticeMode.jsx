@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Editor from '@monaco-editor/react'
 
-export default function PracticeMode({ conceptId }) {
+export default function PracticeMode({ conceptId, concept }) {
   const [task, setTask] = useState(null)
   const [code, setCode] = useState('')
   const [testResults, setTestResults] = useState(null)
@@ -70,13 +70,6 @@ export default function PracticeMode({ conceptId }) {
   return (
     <div className="space-y-6">
       <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-        <h3 className="text-lg font-semibold text-white mb-3">题目描述</h3>
-        <div className="text-slate-300 text-sm whitespace-pre-line leading-relaxed">
-          {task.description}
-        </div>
-      </div>
-
-      <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
         <h3 className="text-lg font-semibold text-white mb-3">代码编辑器</h3>
         <div className="border border-slate-600 rounded-lg overflow-hidden">
           <Editor
@@ -103,6 +96,7 @@ export default function PracticeMode({ conceptId }) {
 
       <div className="flex gap-3">
         <button
+          type="button"
           onClick={handleSubmit}
           disabled={submitting}
           className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -110,12 +104,14 @@ export default function PracticeMode({ conceptId }) {
           {submitting ? '运行中...' : '运行测试'}
         </button>
         <button
+          type="button"
           onClick={() => setShowHint(!showHint)}
           className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
         >
           {showHint ? '隐藏提示' : '查看提示'}
         </button>
         <button
+          type="button"
           onClick={() => setShowSolution(!showSolution)}
           className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
         >
