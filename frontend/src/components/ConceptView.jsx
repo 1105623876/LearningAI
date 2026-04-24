@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
 import CodePanel from './CodePanel'
 import SVGDiagram from './SVGDiagram'
 
@@ -46,7 +47,11 @@ export default function ConceptView({ conceptId }) {
             {concept.difficulty}
           </span>
         </div>
-        <p className="text-gray-600">{concept.descriptionZh}</p>
+        <p className="text-gray-600">
+          <ReactMarkdown className="prose prose-sm max-w-none">
+            {concept.descriptionZh}
+          </ReactMarkdown>
+        </p>
       </div>
 
       <div className="flex-1 overflow-auto p-6">

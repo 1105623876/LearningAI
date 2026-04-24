@@ -21,13 +21,13 @@ export default function PathNav({ paths, concepts, currentConceptId, onConceptSe
   }
 
   return (
-    <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto">
-      <div className="p-4 border-b border-gray-200">
+    <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto h-screen flex flex-col">
+      <div className="p-4 border-b border-gray-200 flex-shrink-0">
         <h1 className="text-xl font-bold">学习路径</h1>
         <p className="text-sm text-gray-500 mt-1">{paths.length} 条路径 · {concepts.length} 个知识点</p>
       </div>
-      
-      <div className="p-2">
+
+      <div className="p-2 flex-1 overflow-y-auto">
         {paths.map(path => (
           <div key={path.id} className="mb-2">
             <button
