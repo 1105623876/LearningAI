@@ -66,7 +66,7 @@ export default function SVGDiagram({ conceptId, svgPath, codeLineMapping, onElem
   return (
     <div
       id={`svg-${conceptId}`}
-      className="bg-slate-800/50 rounded-xl border border-slate-700 p-8 min-h-[300px] flex items-center justify-center"
+      className="bg-slate-800/50 rounded-xl border border-slate-700 p-8 overflow-auto"
       dangerouslySetInnerHTML={{ __html: svgContent }}
     />
   )
