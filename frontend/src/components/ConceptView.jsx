@@ -84,7 +84,7 @@ export default function ConceptView({ conceptId }) {
       </div>
 
       <div className="p-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto">
           {mode === 'understand' ? (
             <div className="space-y-6">
               <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
