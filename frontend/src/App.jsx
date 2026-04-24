@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import PathNav from './components/PathNav'
 import ConceptView from './components/ConceptView'
+import PathOverview from './components/PathOverview'
 import './index.css'
 
 function App() {
