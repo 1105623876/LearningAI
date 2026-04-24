@@ -65,8 +65,34 @@ function App() {
                 <h1 className="text-6xl font-black text-white mb-6 tracking-tight">
                   Learning<span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AI</span>
                 </h1>
-                <p className="text-slate-300 text-xl mb-3 font-light">大模型知识点可视化学习平台</p>
-                <p className="text-slate-400 text-sm">68 个核心概念 · 8 条学习路径 · 从零实现 Transformers、vLLM、TRL</p>
+                <p className="text-slate-300 text-xl mb-6 font-light">大模型知识点可视化学习平台</p>
+
+                <div className="max-w-3xl mx-auto mb-8 space-y-4">
+                  <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
+                    <h2 className="text-lg font-bold text-white mb-3">🎯 学习目标</h2>
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      从零实现 Transformers、vLLM、TRL 等系统的核心模块。通过 68 个实现题，深入理解注意力机制、训练技巧、推理优化、对齐算法等核心概念。
+                      <span className="text-blue-400 font-medium">读完论文，写出代码。无需 GPU。</span>
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg p-4 border border-slate-700/30">
+                      <div className="text-blue-400 font-bold mb-2">🧠 核心框架</div>
+                      <p className="text-slate-400 text-xs">Transformer 架构是现代大模型的基础，理解其内部机制是掌握 AI 的第一步</p>
+                    </div>
+                    <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg p-4 border border-slate-700/30">
+                      <div className="text-purple-400 font-bold mb-2">⚡ 工程优化</div>
+                      <p className="text-slate-400 text-xs">从 KV Cache 到量化，从分布式训练到推理加速，掌握工业级优化技巧</p>
+                    </div>
+                    <div className="bg-slate-800/30 backdrop-blur-sm rounded-lg p-4 border border-slate-700/30">
+                      <div className="text-pink-400 font-bold mb-2">🎓 前沿技术</div>
+                      <p className="text-slate-400 text-xs">Flash Attention、MoE、RLHF 等前沿技术，紧跟 DeepSeek、Meta 最新研究</p>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-slate-400 text-sm">68 个核心概念 · 8 条学习路径 · 图解 + 代码联动</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -106,9 +132,36 @@ function App() {
                           </div>
                         </div>
 
-                        <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                        <p className="text-slate-300 text-sm leading-relaxed mb-4">
                           {path.descriptionZh}
                         </p>
+
+                        <div className="text-xs text-slate-400 mb-4 space-y-1">
+                          {path.id === 'transformer-internals' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>Transformer 是所有现代大模型的基础架构，理解其内部机制是深入学习的第一步</p>
+                          )}
+                          {path.id === 'attention-position' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>注意力机制是 Transformer 的核心，位置编码决定了模型如何理解序列顺序</p>
+                          )}
+                          {path.id === 'train-gpt-from-scratch' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>从零训练 GPT 让你理解完整的训练流程，掌握优化器、学习率调度等关键技巧</p>
+                          )}
+                          {path.id === 'inference-distributed' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>工业级部署必备技能，KV Cache、量化、分布式训练是提升性能的关键</p>
+                          )}
+                          {path.id === 'alignment-agents' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>RLHF 和 PPO 是让 AI 更安全、更有用的核心技术，理解对齐算法是构建可控 AI 的基础</p>
+                          )}
+                          {path.id === 'vision-transformer' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>ViT 将 Transformer 扩展到视觉领域，是多模态大模型的基础</p>
+                          )}
+                          {path.id === 'diffusion-transformer' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>扩散模型是 AIGC 的核心技术，Stable Diffusion 和 DALL-E 都基于此</p>
+                          )}
+                          {path.id === 'llm-frontiers' && (
+                            <p>💡 <span className="text-slate-300">为什么重要：</span>前沿架构如 MoE、差分注意力代表了大模型的最新发展方向</p>
+                          )}
+                        </div>
 
                         <div className="flex items-center justify-between pt-4 border-t border-slate-700/50">
                           <span className="text-xs text-slate-400 font-medium flex items-center gap-2">
