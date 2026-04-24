@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.concepts import router as concepts_router
+from api.practice import router as practice_router
 
 app = FastAPI(title="LearningAI API", version="1.0.0")
 
@@ -13,6 +14,7 @@ app.add_middleware(
 )
 
 app.include_router(concepts_router)
+app.include_router(practice_router)
 
 @app.get("/")
 async def root():
