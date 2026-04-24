@@ -9,7 +9,7 @@ export default function ConceptView({ conceptId }) {
 
   useEffect(() => {
     setLoading(true)
-    fetch(\`http://localhost:8001/api/concepts/\${conceptId}\`)
+    fetch(`http://localhost:8001/api/concepts/${conceptId}`)
       .then(r => r.json())
       .then(data => {
         setConcept(data)
@@ -38,11 +38,11 @@ export default function ConceptView({ conceptId }) {
       <div className="bg-white border-b border-gray-200 p-6">
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-2xl font-bold">{concept.titleZh}</h1>
-          <span className={\`text-xs px-2 py-1 rounded \${
+          <span className={`text-xs px-2 py-1 rounded ${
             concept.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
             concept.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
             'bg-red-100 text-red-700'
-          }\`}>
+          }`}>
             {concept.difficulty}
           </span>
         </div>

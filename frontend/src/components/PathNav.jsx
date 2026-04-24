@@ -46,18 +46,18 @@ export default function PathNav({ paths, concepts, currentConceptId, onConceptSe
                   <button
                     key={concept.id}
                     onClick={() => onConceptSelect(concept.id)}
-                    className={\`w-full text-left px-3 py-1.5 rounded text-sm \${
+                    className={`w-full text-left px-3 py-1.5 rounded text-sm ${
                       currentConceptId === concept.id
                         ? 'bg-blue-50 text-blue-600'
                         : 'hover:bg-gray-50'
-                    }\`}
+                    }`}
                   >
                     {concept.titleZh}
-                    <span className={\`ml-2 text-xs px-1.5 py-0.5 rounded \${
+                    <span className={`ml-2 text-xs px-1.5 py-0.5 rounded ${
                       concept.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
                       concept.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
                       'bg-red-100 text-red-700'
-                    }\`}>
+                    }`}>
                       {concept.difficulty}
                     </span>
                   </button>

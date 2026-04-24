@@ -1,6 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from typing import List, Dict, Any
-from ..utils.pyre_loader import load_paths, build_concepts_index, get_concept_detail
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from utils.pyre_loader import load_paths, build_concepts_index, get_concept_detail
 
 router = APIRouter(prefix="/api", tags=["concepts"])
 
