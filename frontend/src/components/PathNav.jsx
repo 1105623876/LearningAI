@@ -21,53 +21,37 @@ export default function PathNav({ paths, concepts, currentConceptId, onConceptSe
   }
 
   return (
-    <div className="w-80 bg-white/80 backdrop-blur-sm border-r border-slate-200 h-screen flex flex-col shadow-sm">
-      <div className="px-4 py-2 border-b border-slate-200 flex-shrink-0 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <h1 className="text-base font-bold text-slate-800">学习路径</h1>
+    <div className="w-64 bg-white border-r border-slate-200 h-screen flex flex-col flex-shrink-0">
+      <div className="px-3 py-2 border-b border-slate-200 flex-shrink-0">
+        <h1 className="text-sm font-semibold text-slate-700">学习路径</h1>
       </div>
 
-      <div className="p-2 flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto p-2">
         {paths.map(path => (
           <div key={path.id} className="mb-1">
             <button
               onClick={() => togglePath(path.id)}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between group"
+              className="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-xs"
             >
-              <span className="text-sm font-medium text-slate-700 group-hover:text-blue-700">{path.titleZh}</span>
-              <svg
-                className={`w-3 h-3 text-slate-400 group-hover:text-blue-600 transition-transform flex-shrink-0 ${expandedPaths.includes(path.id) ? 'rotate-90' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+              <span className="font-medium text-slate-700 truncate">{path.titleZh}</span>
+              <span className="text-slate-400 text-xs ml-1 flex-shrink-0">
+                {expandedPaths.includes(path.id) ? '▼' : '▶'}
+              </span>
             </button>
 
             {expandedPaths.includes(path.id) && (
-              <div className="ml-2 mt-0.5 space-y-0.5 border-l-2 border-blue-100 pl-2">
+              <div className="ml-2 mt-0.5 space-y-0.5 pl-2 border-l border-slate-200">
                 {getConceptsForPath(path.id).map(concept => (
                   <button
                     key={concept.id}
                     onClick={() => onConceptSelect(concept.id)}
-                    className={`w-full text-left px-2 py-1.5 rounded-md text-xs transition-all ${
+                    className={`w-full text-left px-2 py-1 rounded text-xs ${
                       currentConceptId === concept.id
-                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-sm'
-                        : 'hover:bg-slate-50 text-slate-700'
+                        ? 'bg-blue-500 text-white'
+                        : 'hover:bg-slate-50 text-slate-600'
                     }`}
                   >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-medium truncate">{concept.titleZh}</span>
-                      <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${
-                        currentConceptId === concept.id
-                          ? 'bg-white/20 text-white'
-                          : concept.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-700' :
-                            concept.difficulty === 'Medium' ? 'bg-amber-100 text-amber-700' :
-                            'bg-rose-100 text-rose-700'
-                      }`}>
-                        {concept.difficulty === 'Easy' ? 'E' : concept.difficulty === 'Medium' ? 'M' : 'H'}
-                      </span>
-                    </div>
+                    <div className="truncate">{concept.titleZh}</div>
                   </button>
                 ))}
               </div>
