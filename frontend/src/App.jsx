@@ -55,7 +55,7 @@ function App() {
           <ConceptView conceptId={currentConceptId} />
         ) : (
           <div className="overflow-y-auto h-full bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900">
-            <div className="max-w-6xl mx-auto p-12">
+            <div className="max-w-7xl mx-auto px-8 py-12">
               <div className="text-center mb-16">
                 <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 mb-8 shadow-2xl shadow-blue-500/50 animate-pulse">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@ function App() {
                 <p className="text-slate-400 text-sm">68 个核心概念 · 8 条学习路径 · 从零实现 Transformers、vLLM、TRL</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
                 {paths.map((path, index) => {
                   const gradients = [
                     'from-blue-500 to-cyan-500',

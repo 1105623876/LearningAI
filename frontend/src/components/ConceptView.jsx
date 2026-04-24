@@ -36,19 +36,19 @@ export default function ConceptView({ conceptId }) {
   }
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="bg-white border-b border-slate-200 p-6 sticky top-0 z-10">
+    <div className="h-full overflow-y-auto bg-slate-900">
+      <div className="bg-slate-800 border-b border-slate-700 p-6 sticky top-0 z-10">
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-2xl font-bold text-slate-800">{concept.titleZh}</h1>
+          <h1 className="text-2xl font-bold text-white">{concept.titleZh}</h1>
           <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-            concept.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-700' :
-            concept.difficulty === 'Medium' ? 'bg-amber-100 text-amber-700' :
-            'bg-rose-100 text-rose-700'
+            concept.difficulty === 'Easy' ? 'bg-emerald-500/20 text-emerald-300' :
+            concept.difficulty === 'Medium' ? 'bg-amber-500/20 text-amber-300' :
+            'bg-rose-500/20 text-rose-300'
           }`}>
             {concept.difficulty}
           </span>
         </div>
-        <div className="text-slate-600 prose prose-sm max-w-none">
+        <div className="text-slate-300 prose prose-sm prose-invert max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {concept.descriptionZh}
           </ReactMarkdown>
@@ -57,8 +57,8 @@ export default function ConceptView({ conceptId }) {
 
       <div className="p-6">
         <div className="max-w-6xl mx-auto space-y-6">
-          <div className="bg-white rounded-lg border border-slate-200 p-6">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">概念图解</h2>
+          <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">概念图解</h2>
             <SVGDiagram
               conceptId={conceptId}
               svgPath={concept.diagramPath}
@@ -67,8 +67,8 @@ export default function ConceptView({ conceptId }) {
             />
           </div>
 
-          <div className="bg-white rounded-lg border border-slate-200 p-6">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">参考实现</h2>
+          <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">参考实现</h2>
             <CodePanel
               code={concept.code}
               language="python"
