@@ -35,8 +35,8 @@
   </g>
 
   <g data-code-line="12,13,14">
-    <rect x="100" y="490" width="650" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="425" y="515" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比 LayerNorm:</text>
+    <rect x="100" y="490" width="600" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="515" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比 LayerNorm:</text>
     <text x="120" y="540" fill="#cbd5e1" font-size="11">• LayerNorm: 减均值 + 除标准差，需要计算均值和方差</text>
     <text x="120" y="560" fill="#cbd5e1" font-size="11">• RMSNorm: 只除RMS，无需均值，计算更快</text>
     <text x="120" y="580" fill="#cbd5e1" font-size="11">• LLaMA使用RMSNorm，速度提升约10-15%</text>

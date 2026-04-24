@@ -38,8 +38,8 @@
   </g>
 
   <g data-code-line="12,13,14">
-    <rect x="100" y="510" width="650" height="80" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="425" y="535" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比 LayerNorm:</text>
+    <rect x="100" y="510" width="600" height="80" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="535" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比 LayerNorm:</text>
     <text x="120" y="560" fill="#cbd5e1" font-size="11">• BatchNorm: 按batch维度归一化，依赖batch统计量</text>
     <text x="120" y="580" fill="#cbd5e1" font-size="11">• LayerNorm: 按特征维度归一化，不依赖batch，更适合NLP</text>
   </g>
