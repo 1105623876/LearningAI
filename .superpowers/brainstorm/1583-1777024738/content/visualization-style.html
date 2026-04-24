@@ -1,0 +1,40 @@
+<h2>你希望用什么样的方式来可视化这些概念？</h2>
+<p class="subtitle">选择最能帮助你理解的可视化风格</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>交互式动画演示</h3>
+      <p>像 3Blue1Brown 那样的动画，可以拖动参数、逐步播放，看到注意力权重如何计算、梯度如何流动</p>
+      <div class="label">技术栈：React + D3.js / Three.js</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>静态图解 + 代码对照</h3>
+      <p>精美的静态图示配合代码高亮，左边是图解右边是代码，点击图中的部分高亮对应代码行</p>
+      <div class="label">技术栈：React + SVG + Monaco Editor</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Jupyter Notebook 风格</h3>
+      <p>可执行的代码单元格 + 可视化输出，修改代码立即看到效果，像 Distill.pub 那样的交互式文章</p>
+      <div class="label">技术栈：JupyterLab / Observable / React + Pyodide</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="d" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>混合模式</h3>
+      <p>根据知识点特性选择：简单概念用静态图解，复杂机制用交互动画，算法用可执行代码</p>
+      <div class="label">灵活但开发量大</div>
+    </div>
+  </div>
+</div>

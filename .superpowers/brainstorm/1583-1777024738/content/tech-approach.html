@@ -1,0 +1,56 @@
+<h2>对于概念可视化，你更倾向于哪种技术实现？</h2>
+<p class="subtitle">考虑开发效率和学习效果的平衡</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>交互式动画（高保真）</h3>
+      <p>像 Distill.pub 或 3Blue1Brown 那样的流畅动画，可以拖动参数实时看效果</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><strong>优点：</strong>直观性最强，理解深刻</div>
+        <div class="cons"><strong>缺点：</strong>开发周期长，每个知识点需要定制动画</div>
+      </div>
+      <div class="label" style="margin-top: 8px;">技术：React + D3.js / Manim.js</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>静态图解 + 代码联动</h3>
+      <p>精美的 SVG 图示，点击图中元素高亮对应代码，左右对照学习</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><strong>优点：</strong>开发效率高，易于维护和扩展</div>
+        <div class="cons"><strong>缺点：</strong>交互性较弱，无法看到动态过程</div>
+      </div>
+      <div class="label" style="margin-top: 8px;">技术：React + SVG + Monaco Editor</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>可执行代码 + 可视化输出</h3>
+      <p>类似 Jupyter Notebook，修改代码立即看到矩阵变化、注意力热力图等</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><strong>优点：</strong>动手实践，加深理解</div>
+        <div class="cons"><strong>缺点：</strong>需要后端支持代码执行，或用 Pyodide（较慢）</div>
+      </div>
+      <div class="label" style="margin-top: 8px;">技术：FastAPI + Pyodide / JupyterLab</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="d" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>混合方案（推荐）</h3>
+      <p>MVP 先做静态图解+代码联动（快速覆盖所有知识点），后续对核心概念（如注意力机制）补充交互动画</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><strong>优点：</strong>平衡效率和效果，可迭代</div>
+        <div class="cons"><strong>缺点：</strong>需要规划好架构以支持多种可视化类型</div>
+      </div>
+      <div class="label" style="margin-top: 8px;">分阶段实现</div>
+    </div>
+  </div>
+</div>
