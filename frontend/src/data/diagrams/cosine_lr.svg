@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="lrGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Learning Rate Schedule (学习率调度)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="60" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">动态调整学习率，提升训练效果</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="160" fill="#94a3b8" font-size="14" font-weight="bold">常见策略:</text>
+
+    <rect x="100" y="180" width="300" height="180" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="250" y="205" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Cosine Annealing</text>
+
+    <line x1="130" y1="330" x2="370" y2="330" stroke="#475569" stroke-width="1"/>
+    <line x1="130" y1="230" x2="130" y2="330" stroke="#475569" stroke-width="1"/>
+
+    <path d="M 130 240 Q 180 240 250 285 T 370 320" stroke="url(#lrGrad)" stroke-width="3" fill="none"/>
+
+    <text x="130" y="250" fill="#94a3b8" font-size="10">lr_max</text>
+    <text x="130" y="335" fill="#94a3b8" font-size="10">lr_min</text>
+    <text x="360" y="345" fill="#94a3b8" font-size="10">steps</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <rect x="450" y="180" width="300" height="180" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="600" y="205" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Linear Warmup + Decay</text>
+
+    <line x1="480" y1="330" x2="720" y2="330" stroke="#475569" stroke-width="1"/>
+    <line x1="480" y1="230" x2="480" y2="330" stroke="#475569" stroke-width="1"/>
+
+    <path d="M 480 320 L 540 240 L 720 310" stroke="url(#lrGrad)" stroke-width="3" fill="none"/>
+
+    <text x="480" y="250" fill="#94a3b8" font-size="10">lr_max</text>
+    <text x="520" y="280" fill="#3b82f6" font-size="9">warmup</text>
+    <text x="640" y="280" fill="#ef4444" font-size="9">decay</text>
+  </g>
+
+  <g data-code-line="10,11,12,13">
+    <rect x="100" y="380" width="650" height="140" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="405" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">为什么需要学习率调度:</text>
+
+    <text x="120" y="430" fill="#cbd5e1" font-size="11">• Warmup: 训练初期用小学习率，避免梯度爆炸</text>
+    <text x="120" y="450" fill="#cbd5e1" font-size="11">• Decay: 训练后期降低学习率，精细调整参数</text>
+    <text x="120" y="470" fill="#cbd5e1" font-size="11">• Cosine: 平滑衰减，避免突变，训练更稳定</text>
+    <text x="120" y="490" fill="#cbd5e1" font-size="11">• 常用：Warmup 1000步 + Cosine Decay</text>
+    <text x="120" y="510" fill="#cbd5e1" font-size="11">• GPT-3: 375M tokens warmup, 300B tokens total</text>
+  </g>
+
+  <g transform="translate(50, 545)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：动态调整学习率，训练初期快速收敛，后期精细优化</text>
+  </g>
+  <g transform="translate(50, 562)">
+    <text x="0" y="0" fill="#64748b" font-size="10">现代LLM训练的标配技术</text>
+  </g>
+</svg>

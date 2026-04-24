@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="resGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="350" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Residual Connection (残差连接)</text>
+
+  <!-- Formula -->
+  <g data-code-line="1,2">
+    <rect x="150" y="60" width="400" height="60" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="350" y="95" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">Output = F(x) + x</text>
+    <text x="350" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">F(x): 子层输出, x: 输入</text>
+  </g>
+
+  <!-- Input -->
+  <g data-code-line="3,4">
+    <rect x="250" y="150" width="200" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="350" y="180" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Input x</text>
+  </g>
+
+  <!-- Split path -->
+  <g data-code-line="5,6">
+    <path d="M 350 210 L 350 240" stroke="#64748b" stroke-width="2"/>
+    <circle cx="350" cy="240" r="8" fill="#64748b"/>
+
+    <!-- Main path -->
+    <path d="M 350 240 L 350 280" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <!-- Skip connection -->
+    <path d="M 350 240 L 150 240 L 150 420 L 280 420" stroke="#10b981" stroke-width="4" stroke-dasharray="8,4"/>
+    <text x="100" y="330" fill="#10b981" font-size="13" font-weight="bold">跳跃连接</text>
+  </g>
+
+  <!-- Sublayer (e.g., Attention or FFN) -->
+  <g data-code-line="7,8,9">
+    <rect x="250" y="280" width="200" height="80" rx="6" fill="url(#resGrad)" opacity="0.9"/>
+    <text x="350" y="310" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Sublayer F(x)</text>
+    <text x="350" y="330" text-anchor="middle" fill="#ffffff" font-size="11">(Attention / FFN)</text>
+    <text x="350" y="350" text-anchor="middle" fill="#cbd5e1" font-size="10">可能改变表示</text>
+  </g>
+
+  <!-- Addition -->
+  <g data-code-line="10,11">
+    <path d="M 350 370 L 350 410" stroke="#64748b" stroke-width="3"/>
+    <path d="M 280 420 L 350 420" stroke="#10b981" stroke-width="4"/>
+
+    <circle cx="350" cy="420" r="30" fill="#8b5cf6" opacity="0.9"/>
+    <text x="350" y="430" text-anchor="middle" fill="#ffffff" font-size="24" font-weight="bold">+</text>
+  </g>
+
+  <!-- Output -->
+  <g data-code-line="12,13">
+    <path d="M 350 460 L 350 490" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="250" y="490" width="200" height="50" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="3"/>
+    <text x="350" y="520" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">Output = F(x) + x</text>
+  </g>
+
+  <!-- Gradient flow visualization -->
+  <g transform="translate(500, 200)">
+    <rect x="0" y="0" width="180" height="180" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="90" y="20" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="bold">梯度流动:</text>
+
+    <path d="M 90 160 L 90 50" stroke="#10b981" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <text x="90" y="100" text-anchor="middle" fill="#10b981" font-size="11">直接路径</text>
+
+    <path d="M 50 160 Q 30 100 50 50" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+    <text x="20" y="100" text-anchor="middle" fill="#ef4444" font-size="10">通过F(x)</text>
+
+    <text x="90" y="175" text-anchor="middle" fill="#64748b" font-size="9">缓解梯度消失</text>
+  </g>
+
+  <!-- Key insight -->
+  <g transform="translate(50, 565)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：跳跃连接让梯度直接回传，缓解深层网络的梯度消失问题</text>
+  </g>
+  <g transform="translate(50, 582)">
+    <text x="0" y="0" fill="#64748b" font-size="10">Transformer 每个子层后都有残差连接：Attention + Residual, FFN + Residual</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981" />
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#ef4444" />
+    </marker>
+  </defs>
+</svg>

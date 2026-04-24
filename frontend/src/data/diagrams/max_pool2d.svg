@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" class="w-full h-auto">
+  <defs>
+    <linearGradient id="poolGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Max Pooling 2D</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">取窗口内最大值，降采样</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">减少特征图尺寸，保留主要特征</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="150" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输入 (4×4):</text>
+    <rect x="150" y="190" width="200" height="200" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="165" y="205" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="185" y="230" text-anchor="middle" fill="#ffffff" font-size="12">1</text>
+    <rect x="215" y="205" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="235" y="230" text-anchor="middle" fill="#ffffff" font-size="12">3</text>
+    <rect x="265" y="205" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="285" y="230" text-anchor="middle" fill="#ffffff" font-size="12">2</text>
+    <rect x="315" y="205" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="335" y="230" text-anchor="middle" fill="#ffffff" font-size="12">4</text>
+
+    <rect x="165" y="255" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="185" y="280" text-anchor="middle" fill="#ffffff" font-size="12">5</text>
+    <rect x="215" y="255" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="235" y="280" text-anchor="middle" fill="#ffffff" font-size="12">6</text>
+    <rect x="265" y="255" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="285" y="280" text-anchor="middle" fill="#ffffff" font-size="12">7</text>
+    <rect x="315" y="255" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="335" y="280" text-anchor="middle" fill="#ffffff" font-size="12">8</text>
+
+    <rect x="165" y="305" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="185" y="330" text-anchor="middle" fill="#ffffff" font-size="12">2</text>
+    <rect x="215" y="305" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="235" y="330" text-anchor="middle" fill="#ffffff" font-size="12">1</text>
+    <rect x="265" y="305" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="285" y="330" text-anchor="middle" fill="#ffffff" font-size="12">3</text>
+    <rect x="315" y="305" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="335" y="330" text-anchor="middle" fill="#ffffff" font-size="12">5</text>
+
+    <rect x="165" y="355" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="185" y="380" text-anchor="middle" fill="#ffffff" font-size="12">4</text>
+    <rect x="215" y="355" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="235" y="380" text-anchor="middle" fill="#ffffff" font-size="12">6</text>
+    <rect x="265" y="355" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="285" y="380" text-anchor="middle" fill="#ffffff" font-size="12">2</text>
+    <rect x="315" y="355" width="40" height="40" fill="#3b82f6" opacity="0.3"/>
+    <text x="335" y="380" text-anchor="middle" fill="#ffffff" font-size="12">7</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 360 290 L 420 290" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="390" y="280" text-anchor="middle" fill="#f59e0b" font-size="11">2×2 pool</text>
+
+    <text x="500" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输出 (2×2):</text>
+    <rect x="500" y="190" width="120" height="120" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+
+    <rect x="515" y="205" width="45" height="45" fill="url(#poolGrad)" opacity="0.9"/>
+    <text x="537" y="233" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">6</text>
+    <rect x="570" y="205" width="45" height="45" fill="url(#poolGrad)" opacity="0.9"/>
+    <text x="592" y="233" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">8</text>
+
+    <rect x="515" y="260" width="45" height="45" fill="url(#poolGrad)" opacity="0.9"/>
+    <text x="537" y="288" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">6</text>
+    <rect x="570" y="260" width="45" height="45" fill="url(#poolGrad)" opacity="0.9"/>
+    <text x="592" y="288" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">7</text>
+  </g>
+
+  <g data-code-line="10,11,12">
+    <rect x="100" y="420" width="600" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="445" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">特点:</text>
+    <text x="120" y="470" fill="#cbd5e1" font-size="11">• 降采样: 减少特征图尺寸，降低计算量</text>
+    <text x="120" y="490" fill="#cbd5e1" font-size="11">• 平移不变性: 提取主要特征，忽略微小位移</text>
+    <text x="120" y="510" fill="#cbd5e1" font-size="11">• 无参数: 不需要训练，纯数学操作</text>
+  </g>
+
+  <g transform="translate(50, 535)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：取窗口最大值，降低分辨率，保留显著特征</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

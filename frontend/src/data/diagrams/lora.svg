@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="loraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">LoRA (Low-Rank Adaptation)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">低秩矩阵分解，高效微调大模型</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">只训练少量参数，显存占用极低</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">标准微调:</text>
+    <rect x="100" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="240" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">更新所有参数 W</text>
+    <text x="240" y="245" text-anchor="middle" fill="#ef4444" font-size="11">7B模型需要14GB显存</text>
+    <text x="240" y="265" text-anchor="middle" fill="#ef4444" font-size="11">训练慢，显存占用大</text>
+  </g>
+
+  <g data-code-line="7,8,9,10">
+    <text x="420" y="170" fill="#94a3b8" font-size="14" font-weight="bold">LoRA微调:</text>
+    <rect x="420" y="190" width="280" height="180" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="560" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">W' = W + BA</text>
+    <text x="560" y="245" text-anchor="middle" fill="#94a3b8" font-size="11">W: 冻结的预训练权重</text>
+    <text x="560" y="265" text-anchor="middle" fill="#94a3b8" font-size="11">B: (d × r), A: (r × k)</text>
+    <text x="560" y="285" text-anchor="middle" fill="#94a3b8" font-size="11">r << min(d, k) (通常r=8)</text>
+    <text x="560" y="310" text-anchor="middle" fill="#10b981" font-size="11">只训练B和A</text>
+    <text x="560" y="330" text-anchor="middle" fill="#10b981" font-size="11">参数量: 0.1-1%</text>
+    <text x="560" y="350" text-anchor="middle" fill="#10b981" font-size="11">显存: 1-2GB</text>
+  </g>
+
+  <g data-code-line="11,12,13">
+    <rect x="100" y="390" width="600" height="120" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="415" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">示例 (7B模型):</text>
+    <text x="120" y="440" fill="#cbd5e1" font-size="11">• 原始权重: 7B参数 (14GB)</text>
+    <text x="120" y="460" fill="#cbd5e1" font-size="11">• LoRA参数: 4M参数 (8MB)，r=8</text>
+    <text x="120" y="480" fill="#cbd5e1" font-size="11">• 训练显存: 1-2GB vs 14GB</text>
+    <text x="120" y="500" fill="#cbd5e1" font-size="11">• 训练速度: 3-5倍加速</text>
+  </g>
+
+  <g data-code-line="14,15">
+    <rect x="100" y="530" width="600" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="555" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">应用:</text>
+    <text x="400" y="575" text-anchor="middle" fill="#cbd5e1" font-size="11">个人电脑微调大模型、多任务适配、快速实验</text>
+  </g>
+
+  <g transform="translate(50, 605)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：低秩分解，只训练少量参数，高效微调大模型</text>
+  </g>
+</svg>

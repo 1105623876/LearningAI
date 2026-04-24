@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="swigluGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">SwiGLU Activation</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">SwiGLU(x) = Swish(xW) ⊗ (xV)</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">Swish(x) = x · sigmoid(x)，⊗ 是逐元素乘法</text>
+  </g>
+
+  <g data-code-line="4,5">
+    <rect x="300" y="160" width="200" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="190" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Input x</text>
+  </g>
+
+  <g data-code-line="6,7,8">
+    <path d="M 350 220 L 250 250 M 450 220 L 550 250" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="150" y="250" width="200" height="60" rx="6" fill="#3b82f6" opacity="0.9"/>
+    <text x="250" y="275" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">xW (gate)</text>
+    <text x="250" y="295" text-anchor="middle" fill="#cbd5e1" font-size="11">Linear projection</text>
+
+    <rect x="450" y="250" width="200" height="60" rx="6" fill="#8b5cf6" opacity="0.9"/>
+    <text x="550" y="275" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">xV (value)</text>
+    <text x="550" y="295" text-anchor="middle" fill="#cbd5e1" font-size="11">Linear projection</text>
+  </g>
+
+  <g data-code-line="9,10">
+    <path d="M 250 320 L 250 360" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="150" y="360" width="200" height="60" rx="6" fill="url(#swigluGrad)" opacity="0.9"/>
+    <text x="250" y="385" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Swish(xW)</text>
+    <text x="250" y="405" text-anchor="middle" fill="#cbd5e1" font-size="11">xW · σ(xW)</text>
+  </g>
+
+  <g data-code-line="11,12">
+    <path d="M 250 430 L 250 470 M 550 320 L 550 470" stroke="#64748b" stroke-width="2"/>
+    <path d="M 250 470 L 400 490 M 550 470 L 400 490" stroke="#64748b" stroke-width="2"/>
+
+    <circle cx="400" cy="490" r="30" fill="#10b981" opacity="0.9"/>
+    <text x="400" y="498" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">⊗</text>
+  </g>
+
+  <g data-code-line="13,14">
+    <path d="M 400 530 L 400 560" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="300" y="560" width="200" height="50" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="590" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Output</text>
+  </g>
+
+  <g transform="translate(50, 625)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：门控机制 + Swish激活，LLaMA/PaLM使用，性能优于GELU</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

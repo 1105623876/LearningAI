@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Multi-Head Latent Attention</text>
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Multi-Head Latent Attention的核心概念</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
+  </g>
+  <g data-code-line="4,5,6">
+    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
+    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Multi-Head Latent Attention的可视化图解</text>
+    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
+    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
+  </g>
+  <g transform="translate(50, 435)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Multi-Head Latent Attention的基本原理和应用场景</text>
+  </g>
+</svg>

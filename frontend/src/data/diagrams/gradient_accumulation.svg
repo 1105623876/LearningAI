@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="gradAccGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Gradient Accumulation (梯度累积)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">累积多个小batch的梯度，模拟大batch训练</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">显存不足时的解决方案</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">标准训练 (batch_size=32):</text>
+    <rect x="100" y="190" width="280" height="140" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="120" y="210" width="240" height="30" rx="4" fill="#3b82f6" opacity="0.8"/>
+    <text x="240" y="230" text-anchor="middle" fill="#ffffff" font-size="11">前向传播 (32样本)</text>
+
+    <rect x="120" y="250" width="240" height="30" rx="4" fill="#8b5cf6" opacity="0.8"/>
+    <text x="240" y="270" text-anchor="middle" fill="#ffffff" font-size="11">反向传播 (32样本)</text>
+
+    <rect x="120" y="290" width="240" height="30" rx="4" fill="#10b981" opacity="0.8"/>
+    <text x="240" y="310" text-anchor="middle" fill="#ffffff" font-size="11">更新参数</text>
+  </g>
+
+  <g data-code-line="7,8,9,10">
+    <text x="420" y="170" fill="#94a3b8" font-size="14" font-weight="bold">梯度累积 (batch_size=8×4):</text>
+    <rect x="420" y="190" width="280" height="280" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+
+    <rect x="440" y="210" width="240" height="25" rx="4" fill="#3b82f6" opacity="0.6"/>
+    <text x="560" y="227" text-anchor="middle" fill="#ffffff" font-size="10">前向 (8样本) step 1</text>
+
+    <rect x="440" y="240" width="240" height="25" rx="4" fill="#8b5cf6" opacity="0.6"/>
+    <text x="560" y="257" text-anchor="middle" fill="#ffffff" font-size="10">反向 (8样本) 累积梯度</text>
+
+    <rect x="440" y="275" width="240" height="25" rx="4" fill="#3b82f6" opacity="0.6"/>
+    <text x="560" y="292" text-anchor="middle" fill="#ffffff" font-size="10">前向 (8样本) step 2</text>
+
+    <rect x="440" y="305" width="240" height="25" rx="4" fill="#8b5cf6" opacity="0.6"/>
+    <text x="560" y="322" text-anchor="middle" fill="#ffffff" font-size="10">反向 (8样本) 累积梯度</text>
+
+    <rect x="440" y="340" width="240" height="25" rx="4" fill="#3b82f6" opacity="0.6"/>
+    <text x="560" y="357" text-anchor="middle" fill="#ffffff" font-size="10">前向 (8样本) step 3</text>
+
+    <rect x="440" y="370" width="240" height="25" rx="4" fill="#8b5cf6" opacity="0.6"/>
+    <text x="560" y="387" text-anchor="middle" fill="#ffffff" font-size="10">反向 (8样本) 累积梯度</text>
+
+    <rect x="440" y="405" width="240" height="25" rx="4" fill="#3b82f6" opacity="0.6"/>
+    <text x="560" y="422" text-anchor="middle" fill="#ffffff" font-size="10">前向 (8样本) step 4</text>
+
+    <rect x="440" y="435" width="240" height="25" rx="4" fill="#8b5cf6" opacity="0.6"/>
+    <text x="560" y="452" text-anchor="middle" fill="#ffffff" font-size="10">反向 (8样本) 累积梯度</text>
+
+    <rect x="440" y="475" width="240" height="30" rx="4" fill="#10b981" opacity="0.8"/>
+    <text x="560" y="495" text-anchor="middle" fill="#ffffff" font-size="11">更新参数 (等效32样本)</text>
+  </g>
+
+  <g data-code-line="11,12,13">
+    <rect x="100" y="490" width="650" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="515" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">优势:</text>
+
+    <text x="120" y="540" fill="#cbd5e1" font-size="11">• 显存占用: 只需存储8样本的激活值，而非32样本</text>
+    <text x="120" y="560" fill="#cbd5e1" font-size="11">• 训练效果: 等效于batch_size=32，梯度更稳定</text>
+    <text x="120" y="580" fill="#cbd5e1" font-size="11">• 代价: 训练时间略增 (4次前向反向 vs 1次)</text>
+  </g>
+
+  <g transform="translate(50, 605)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：用时间换空间，累积多个小batch的梯度，模拟大batch训练效果</text>
+  </g>
+</svg>

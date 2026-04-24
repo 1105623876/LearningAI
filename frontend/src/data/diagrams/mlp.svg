@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <linearGradient id="ffnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Feed-Forward Network (FFN)</text>
+
+  <!-- Formula -->
+  <g data-code-line="1,2,3">
+    <rect x="150" y="60" width="500" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">FFN(x) = max(0, xW₁ + b₁)W₂ + b₂</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">两层全连接网络，中间使用ReLU/GELU激活</text>
+  </g>
+
+  <!-- Input -->
+  <g data-code-line="4,5">
+    <rect x="300" y="160" width="200" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="190" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Input (d_model=512)</text>
+  </g>
+
+  <!-- First linear layer -->
+  <g data-code-line="6,7,8">
+    <path d="M 400 220 L 400 250" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="250" y="250" width="300" height="60" rx="6" fill="url(#ffnGrad)" opacity="0.9"/>
+    <text x="400" y="275" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Linear 1: W₁</text>
+    <text x="400" y="295" text-anchor="middle" fill="#ffffff" font-size="12">(d_model → d_ff)</text>
+    <text x="400" y="308" text-anchor="middle" fill="#cbd5e1" font-size="10">通常 d_ff = 4 × d_model = 2048</text>
+  </g>
+
+  <!-- Dimension expansion visualization -->
+  <g data-code-line="6,7">
+    <rect x="50" y="260" width="150" height="40" rx="4" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="125" y="280" text-anchor="middle" fill="#94a3b8" font-size="10">维度扩展:</text>
+    <text x="125" y="295" text-anchor="middle" fill="#8b5cf6" font-size="10">512 → 2048 (4倍)</text>
+  </g>
+
+  <!-- Activation -->
+  <g data-code-line="9,10">
+    <path d="M 400 320 L 400 350" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="300" y="350" width="200" height="50" rx="6" fill="#10b981" opacity="0.9"/>
+    <text x="400" y="380" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">ReLU / GELU</text>
+  </g>
+
+  <!-- Second linear layer -->
+  <g data-code-line="11,12,13">
+    <path d="M 400 410 L 400 440" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="250" y="440" width="300" height="60" rx="6" fill="url(#ffnGrad)" opacity="0.9"/>
+    <text x="400" y="465" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Linear 2: W₂</text>
+    <text x="400" y="485" text-anchor="middle" fill="#ffffff" font-size="12">(d_ff → d_model)</text>
+    <text x="400" y="498" text-anchor="middle" fill="#cbd5e1" font-size="10">投影回原始维度 2048 → 512</text>
+  </g>
+
+  <!-- Dimension reduction visualization -->
+  <g data-code-line="11,12">
+    <rect x="600" y="450" width="150" height="40" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+    <text x="675" y="470" text-anchor="middle" fill="#94a3b8" font-size="10">维度压缩:</text>
+    <text x="675" y="485" text-anchor="middle" fill="#3b82f6" font-size="10">2048 → 512</text>
+  </g>
+
+  <!-- Output -->
+  <g data-code-line="14,15">
+    <path d="M 400 510 L 400 540" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="300" y="540" width="200" height="50" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="3"/>
+    <text x="400" y="570" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">Output (d_model=512)</text>
+  </g>
+
+  <!-- Architecture diagram -->
+  <g transform="translate(50, 620)">
+    <text x="0" y="0" fill="#94a3b8" font-size="12" font-weight="bold">完整结构:</text>
+    <text x="0" y="20" fill="#cbd5e1" font-size="11" font-family="monospace">Input (512) → Linear (2048) → ReLU → Linear (512) → Output</text>
+  </g>
+
+  <!-- Key insight -->
+  <g transform="translate(50, 660)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：先扩展到高维空间增强表达能力，再压缩回原维度</text>
+  </g>
+  <g transform="translate(50, 677)">
+    <text x="0" y="0" fill="#64748b" font-size="10">每个token独立处理，不同位置间无交互（对比Attention的全局交互）</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

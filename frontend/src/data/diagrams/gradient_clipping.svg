@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="gradClipGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Gradient Clipping (梯度裁剪)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">限制梯度范数，防止梯度爆炸</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">if ||g|| > threshold: g = g × (threshold / ||g||)</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">梯度爆炸问题:</text>
+    <rect x="100" y="190" width="300" height="180" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+
+    <line x1="130" y1="340" x2="370" y2="340" stroke="#475569" stroke-width="1"/>
+    <line x1="130" y1="220" x2="130" y2="340" stroke="#475569" stroke-width="1"/>
+
+    <path d="M 130 330 L 180 320 L 230 280 L 280 180 L 330 100" stroke="#ef4444" stroke-width="3"/>
+
+    <text x="250" y="260" fill="#ef4444" font-size="12">梯度指数增长</text>
+    <text x="250" y="360" fill="#94a3b8" font-size="10">训练步数</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <text x="450" y="170" fill="#94a3b8" font-size="14" font-weight="bold">裁剪后:</text>
+    <rect x="450" y="190" width="300" height="180" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+
+    <line x1="480" y1="340" x2="720" y2="340" stroke="#475569" stroke-width="1"/>
+    <line x1="480" y1="220" x2="480" y2="340" stroke="#475569" stroke-width="1"/>
+
+    <path d="M 480 330 L 530 320 L 580 280 L 630 250 L 680 250" stroke="#10b981" stroke-width="3"/>
+    <line x1="480" y1="250" x2="720" y2="250" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4,4"/>
+
+    <text x="600" y="240" fill="#8b5cf6" font-size="11">threshold</text>
+    <text x="600" y="300" fill="#10b981" font-size="12">梯度被限制</text>
+  </g>
+
+  <g data-code-line="10,11,12">
+    <rect x="100" y="390" width="650" height="120" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="415" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">实现方式:</text>
+
+    <text x="120" y="440" fill="#cbd5e1" font-size="11">• 按范数裁剪: g = g × min(1, threshold / ||g||)</text>
+    <text x="120" y="460" fill="#cbd5e1" font-size="11">• 按值裁剪: g = clip(g, -threshold, threshold)</text>
+    <text x="120" y="480" fill="#cbd5e1" font-size="11">• 常用阈值: 1.0 (GPT-3), 0.5-5.0 (根据模型调整)</text>
+    <text x="120" y="500" fill="#cbd5e1" font-size="11">• PyTorch: torch.nn.utils.clip_grad_norm_()</text>
+  </g>
+
+  <g data-code-line="13,14,15">
+    <rect x="100" y="530" width="650" height="80" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="425" y="555" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">效果:</text>
+
+    <text x="120" y="580" fill="#cbd5e1" font-size="11">• 防止梯度爆炸，训练更稳定</text>
+    <text x="120" y="600" fill="#cbd5e1" font-size="11">• 允许使用更大学习率，加速收敛</text>
+  </g>
+
+  <g transform="translate(50, 635)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：限制梯度范数，防止梯度爆炸导致训练崩溃</text>
+  </g>
+</svg>

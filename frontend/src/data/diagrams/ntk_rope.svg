@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">NTK-aware RoPE Scaling</text>
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">调整RoPE频率，扩展上下文长度</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">训练2k，推理可扩展到8k+</text>
+  </g>
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">标准RoPE:</text>
+    <rect x="100" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="240" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">θ = 10000^(-2i/d)</text>
+    <text x="240" y="245" text-anchor="middle" fill="#ef4444" font-size="11">超出训练长度性能下降</text>
+    <text x="240" y="265" text-anchor="middle" fill="#ef4444" font-size="11">外推能力有限</text>
+  </g>
+  <g data-code-line="7,8,9">
+    <text x="420" y="170" fill="#94a3b8" font-size="14" font-weight="bold">NTK-aware Scaling:</text>
+    <rect x="420" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="560" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">θ' = α·θ, α>1</text>
+    <text x="560" y="245" text-anchor="middle" fill="#10b981" font-size="11">降低频率，扩展范围</text>
+    <text x="560" y="265" text-anchor="middle" fill="#10b981" font-size="11">外推性能优秀</text>
+  </g>
+  <g data-code-line="10,11,12">
+    <rect x="100" y="310" width="600" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="335" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">效果:</text>
+    <text x="120" y="360" fill="#cbd5e1" font-size="11">• 训练2k，推理可扩展到8k-32k</text>
+    <text x="120" y="380" fill="#cbd5e1" font-size="11">• 无需重新训练，直接调整频率</text>
+    <text x="120" y="400" fill="#cbd5e1" font-size="11">• LLaMA-2等模型使用</text>
+  </g>
+  <g transform="translate(50, 435)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：调整RoPE频率参数，扩展上下文窗口，无需重新训练</text>
+  </g>
+</svg>

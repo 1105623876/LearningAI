@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="slidingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Sliding Window Attention</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">每个token只关注固定窗口内的邻居</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">O(n×w) 复杂度，w是窗口大小</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">全局Attention (O(n²)):</text>
+    <rect x="100" y="190" width="250" height="200" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+
+    <rect x="120" y="210" width="30" height="30" fill="#10b981" opacity="0.8"/>
+    <rect x="160" y="210" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="200" y="210" width="30" height="30" fill="#10b981" opacity="0.4"/>
+    <rect x="240" y="210" width="30" height="30" fill="#10b981" opacity="0.2"/>
+    <rect x="280" y="210" width="30" height="30" fill="#10b981" opacity="0.1"/>
+
+    <rect x="120" y="250" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="160" y="250" width="30" height="30" fill="#10b981" opacity="0.8"/>
+    <rect x="200" y="250" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="240" y="250" width="30" height="30" fill="#10b981" opacity="0.4"/>
+    <rect x="280" y="250" width="30" height="30" fill="#10b981" opacity="0.2"/>
+
+    <rect x="120" y="290" width="30" height="30" fill="#10b981" opacity="0.4"/>
+    <rect x="160" y="290" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="200" y="290" width="30" height="30" fill="#10b981" opacity="0.8"/>
+    <rect x="240" y="290" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="280" y="290" width="30" height="30" fill="#10b981" opacity="0.4"/>
+
+    <text x="225" y="365" text-anchor="middle" fill="#ef4444" font-size="11">所有token互相关注</text>
+  </g>
+
+  <g data-code-line="7,8,9,10">
+    <text x="450" y="170" fill="#94a3b8" font-size="14" font-weight="bold">Sliding Window (window=3):</text>
+    <rect x="450" y="190" width="250" height="200" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+
+    <rect x="470" y="210" width="30" height="30" fill="#10b981" opacity="0.8"/>
+    <rect x="510" y="210" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="550" y="210" width="30" height="30" fill="#10b981" opacity="0.4"/>
+    <rect x="590" y="210" width="30" height="30" fill="#1e293b" stroke="#64748b"/>
+    <rect x="630" y="210" width="30" height="30" fill="#1e293b" stroke="#64748b"/>
+
+    <rect x="470" y="250" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="510" y="250" width="30" height="30" fill="#10b981" opacity="0.8"/>
+    <rect x="550" y="250" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="590" y="250" width="30" height="30" fill="#10b981" opacity="0.4"/>
+    <rect x="630" y="250" width="30" height="30" fill="#1e293b" stroke="#64748b"/>
+
+    <rect x="470" y="290" width="30" height="30" fill="#10b981" opacity="0.4"/>
+    <rect x="510" y="290" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="550" y="290" width="30" height="30" fill="#10b981" opacity="0.8"/>
+    <rect x="590" y="290" width="30" height="30" fill="#10b981" opacity="0.6"/>
+    <rect x="630" y="290" width="30" height="30" fill="#10b981" opacity="0.4"/>
+
+    <text x="575" y="365" text-anchor="middle" fill="#10b981" font-size="11">只关注窗口内邻居</text>
+  </g>
+
+  <g data-code-line="11,12,13">
+    <rect x="100" y="410" width="600" height="120" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="435" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">优势:</text>
+    <text x="120" y="460" fill="#cbd5e1" font-size="11">• 复杂度: O(n×w) vs O(n²)，长序列更高效</text>
+    <text x="120" y="480" fill="#cbd5e1" font-size="11">• 显存: 线性增长，支持更长上下文</text>
+    <text x="120" y="500" fill="#cbd5e1" font-size="11">• 应用: Mistral使用window=4096，Longformer使用局部+全局混合</text>
+    <text x="120" y="520" fill="#cbd5e1" font-size="11">• 权衡: 远距离依赖需要多层传递</text>
+  </g>
+
+  <g transform="translate(50, 555)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：限制注意力范围到局部窗口，降低复杂度，支持长序列</text>
+  </g>
+</svg>

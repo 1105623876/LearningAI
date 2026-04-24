@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="batchnormGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Batch Normalization</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">BN(x) = γ · (x - μ_B) / √(σ²_B + ε) + β</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">μ_B, σ²_B: batch的均值和方差</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输入 (batch_size, channels, height, width):</text>
+    <rect x="100" y="190" width="600" height="100" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">Batch 1: [2.1, 1.5, 0.3, ...]</text>
+    <text x="400" y="240" text-anchor="middle" fill="#cbd5e1" font-size="12">Batch 2: [1.8, 2.0, 0.5, ...]</text>
+    <text x="400" y="260" text-anchor="middle" fill="#cbd5e1" font-size="12">Batch 3: [2.3, 1.2, 0.8, ...]</text>
+    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">按batch维度计算统计量</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 400 300 L 400 330" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="250" y="330" width="300" height="60" rx="6" fill="url(#batchnormGrad)" opacity="0.9"/>
+    <text x="400" y="355" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">归一化 (按batch维度)</text>
+    <text x="400" y="375" text-anchor="middle" fill="#cbd5e1" font-size="11">每个通道独立归一化</text>
+  </g>
+
+  <g data-code-line="10,11">
+    <path d="M 400 400 L 400 430" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="100" y="430" width="600" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="455" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">输出 (均值≈0, 方差≈1)</text>
+    <text x="400" y="475" text-anchor="middle" fill="#94a3b8" font-size="11">每个batch归一化后分布一致</text>
+  </g>
+
+  <g data-code-line="12,13,14">
+    <rect x="100" y="510" width="650" height="80" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="535" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比 LayerNorm:</text>
+    <text x="120" y="560" fill="#cbd5e1" font-size="11">• BatchNorm: 按batch维度归一化，依赖batch统计量</text>
+    <text x="120" y="580" fill="#cbd5e1" font-size="11">• LayerNorm: 按特征维度归一化，不依赖batch，更适合NLP</text>
+  </g>
+
+  <g transform="translate(50, 605)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：按batch维度归一化，加速训练，常用于CV任务</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

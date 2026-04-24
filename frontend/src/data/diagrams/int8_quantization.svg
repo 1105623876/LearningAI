@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="int8Grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">INT8 Quantization</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">将FP16/FP32权重量化为INT8，减少显存</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">4倍显存节省，2-3倍推理加速</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">FP16权重:</text>
+    <rect x="100" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="240" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">[-0.523, 1.234, -0.891, ...]</text>
+    <text x="240" y="245" text-anchor="middle" fill="#94a3b8" font-size="11">范围: -65504 ~ 65504</text>
+    <text x="240" y="265" text-anchor="middle" fill="#ef4444" font-size="11">显存: 2 bytes/参数</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 380 240 L 420 240" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="400" y="230" text-anchor="middle" fill="#f59e0b" font-size="11">量化</text>
+  </g>
+
+  <g data-code-line="10,11,12">
+    <text x="420" y="170" fill="#94a3b8" font-size="14" font-weight="bold">INT8权重:</text>
+    <rect x="420" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="560" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">[-67, 127, -115, ...]</text>
+    <text x="560" y="245" text-anchor="middle" fill="#94a3b8" font-size="11">范围: -128 ~ 127</text>
+    <text x="560" y="265" text-anchor="middle" fill="#10b981" font-size="11">显存: 1 byte/参数 (节省50%)</text>
+  </g>
+
+  <g data-code-line="13,14,15">
+    <rect x="100" y="310" width="600" height="120" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="335" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">量化公式:</text>
+    <text x="400" y="360" text-anchor="middle" fill="#f1f5f9" font-size="14" font-family="monospace">x_int8 = round(x_fp16 / scale)</text>
+    <text x="400" y="385" text-anchor="middle" fill="#94a3b8" font-size="12">scale = max(|x_fp16|) / 127</text>
+    <text x="400" y="410" text-anchor="middle" fill="#94a3b8" font-size="11">反量化: x_fp16 ≈ x_int8 × scale</text>
+  </g>
+
+  <g data-code-line="16,17,18">
+    <rect x="100" y="450" width="600" height="100" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="475" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">效果:</text>
+    <text x="120" y="500" fill="#cbd5e1" font-size="11">• 显存: 7B模型从14GB降至7GB</text>
+    <text x="120" y="520" fill="#cbd5e1" font-size="11">• 速度: 推理加速2-3倍 (INT8 GEMM更快)</text>
+    <text x="120" y="540" fill="#cbd5e1" font-size="11">• 精度损失: 通常<1%，可接受</text>
+  </g>
+
+  <g transform="translate(50, 575)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：用低精度整数表示权重，大幅减少显存和计算量</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

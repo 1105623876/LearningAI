@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="diffGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Differential Attention</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">两组attention相减，抑制噪声</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">DeepSeek-V3使用，提升长文本性能</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <rect x="300" y="160" width="200" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="190" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Input</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 350 220 L 250 260 M 450 220 L 550 260" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="150" y="260" width="200" height="80" rx="6" fill="#3b82f6" opacity="0.9"/>
+    <text x="250" y="290" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Attention 1</text>
+    <text x="250" y="310" text-anchor="middle" fill="#cbd5e1" font-size="11">Q₁K₁^T / √d_k</text>
+    <text x="250" y="330" text-anchor="middle" fill="#cbd5e1" font-size="10">关注主要信息</text>
+
+    <rect x="450" y="260" width="200" height="80" rx="6" fill="#8b5cf6" opacity="0.9"/>
+    <text x="550" y="290" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Attention 2</text>
+    <text x="550" y="310" text-anchor="middle" fill="#cbd5e1" font-size="11">Q₂K₂^T / √d_k</text>
+    <text x="550" y="330" text-anchor="middle" fill="#cbd5e1" font-size="10">关注噪声模式</text>
+  </g>
+
+  <g data-code-line="10,11,12">
+    <path d="M 250 350 L 250 390 M 550 350 L 550 390" stroke="#64748b" stroke-width="2"/>
+    <path d="M 250 390 L 400 420 M 550 390 L 400 420" stroke="#64748b" stroke-width="2"/>
+
+    <circle cx="400" cy="420" r="35" fill="url(#diffGrad)" opacity="0.9"/>
+    <text x="400" y="430" text-anchor="middle" fill="#ffffff" font-size="24" font-weight="bold">−</text>
+  </g>
+
+  <g data-code-line="13,14">
+    <path d="M 400 465 L 400 495" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="250" y="495" width="300" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="520" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Diff-Attn = Attn₁ - λ·Attn₂</text>
+    <text x="400" y="540" text-anchor="middle" fill="#94a3b8" font-size="11">λ: 噪声抑制系数</text>
+  </g>
+
+  <g data-code-line="15,16,17">
+    <rect x="100" y="575" width="600" height="80" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="600" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">优势:</text>
+    <text x="120" y="625" fill="#cbd5e1" font-size="11">• 抑制噪声: 减去冗余attention，聚焦关键信息</text>
+    <text x="120" y="645" fill="#cbd5e1" font-size="11">• 长文本: 提升长上下文理解能力，DeepSeek-V3核心创新</text>
+  </g>
+
+  <g transform="translate(50, 670)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：两组attention相减，过滤噪声，提升信号质量</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

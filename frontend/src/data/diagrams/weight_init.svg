@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Kaiming Initialization</text>
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">W ~ N(0, 2/n_in)，适配ReLU</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">保持激活值方差稳定</text>
+  </g>
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">随机初始化问题:</text>
+    <rect x="100" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="240" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">W ~ N(0, 0.01)</text>
+    <text x="240" y="245" text-anchor="middle" fill="#ef4444" font-size="11">梯度消失/爆炸</text>
+    <text x="240" y="265" text-anchor="middle" fill="#ef4444" font-size="11">训练不稳定</text>
+  </g>
+  <g data-code-line="7,8,9">
+    <text x="420" y="170" fill="#94a3b8" font-size="14" font-weight="bold">Kaiming初始化:</text>
+    <rect x="420" y="190" width="280" height="100" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="560" y="220" text-anchor="middle" fill="#cbd5e1" font-size="12">W ~ N(0, √(2/n_in))</text>
+    <text x="560" y="245" text-anchor="middle" fill="#10b981" font-size="11">方差稳定</text>
+    <text x="560" y="265" text-anchor="middle" fill="#10b981" font-size="11">训练快速收敛</text>
+  </g>
+  <g data-code-line="10,11,12">
+    <rect x="100" y="310" width="600" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="335" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">适用场景:</text>
+    <text x="120" y="360" fill="#cbd5e1" font-size="11">• ReLU/LeakyReLU激活函数</text>
+    <text x="120" y="380" fill="#cbd5e1" font-size="11">• ResNet、VGG等深度网络</text>
+    <text x="120" y="400" fill="#cbd5e1" font-size="11">• PyTorch默认初始化方法</text>
+  </g>
+  <g transform="translate(50, 435)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：根据输入维度调整初始化方差，保持前向传播时激活值方差稳定</text>
+  </g>
+</svg>

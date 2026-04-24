@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" class="w-full h-auto">
+  <defs>
+    <linearGradient id="qGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="kGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="vGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Scaled Dot-Product Attention</text>
+
+  <!-- Formula -->
+  <g data-code-line="1,2,3">
+    <rect x="200" y="60" width="500" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="450" y="90" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">Attention(Q, K, V) = softmax(QK^T / √d_k) V</text>
+    <text x="450" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">Q: Query, K: Key, V: Value, d_k: key维度</text>
+  </g>
+
+  <!-- Input: Q, K, V -->
+  <g data-code-line="4,5,6">
+    <rect x="100" y="160" width="150" height="60" rx="6" fill="url(#qGrad)" opacity="0.9"/>
+    <text x="175" y="195" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Query (Q)</text>
+    <text x="175" y="210" text-anchor="middle" fill="#ffffff" font-size="11">(seq_len, d_k)</text>
+
+    <rect x="375" y="160" width="150" height="60" rx="6" fill="url(#kGrad)" opacity="0.9"/>
+    <text x="450" y="195" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Key (K)</text>
+    <text x="450" y="210" text-anchor="middle" fill="#ffffff" font-size="11">(seq_len, d_k)</text>
+
+    <rect x="650" y="160" width="150" height="60" rx="6" fill="url(#vGrad)" opacity="0.9"/>
+    <text x="725" y="195" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Value (V)</text>
+    <text x="725" y="210" text-anchor="middle" fill="#ffffff" font-size="11">(seq_len, d_v)</text>
+  </g>
+
+  <!-- Step 1: QK^T -->
+  <g data-code-line="7,8,9">
+    <path d="M 175 230 L 175 270 M 450 230 L 450 270" stroke="#64748b" stroke-width="2"/>
+    <path d="M 175 270 L 312 290 M 450 270 L 312 290" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="237" y="290" width="150" height="50" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="312" y="315" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">QK^T / √d_k</text>
+    <text x="312" y="330" text-anchor="middle" fill="#94a3b8" font-size="11">(seq_len, seq_len)</text>
+  </g>
+
+  <!-- Step 2: Softmax -->
+  <g data-code-line="10,11">
+    <path d="M 312 350 L 312 380" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="237" y="380" width="150" height="50" rx="6" fill="#10b981" opacity="0.9"/>
+    <text x="312" y="405" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Softmax</text>
+    <text x="312" y="420" text-anchor="middle" fill="#ffffff" font-size="11">注意力权重</text>
+  </g>
+
+  <!-- Attention weights visualization -->
+  <g data-code-line="10,11">
+    <rect x="50" y="380" width="150" height="50" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+    <text x="125" y="395" text-anchor="middle" fill="#94a3b8" font-size="10">权重矩阵示例:</text>
+    <text x="125" y="410" text-anchor="middle" fill="#10b981" font-size="9" font-family="monospace">[0.7, 0.2, 0.1]</text>
+    <text x="125" y="422" text-anchor="middle" fill="#10b981" font-size="9" font-family="monospace">[0.1, 0.8, 0.1]</text>
+  </g>
+
+  <!-- Step 3: Multiply with V -->
+  <g data-code-line="12,13,14">
+    <path d="M 312 440 L 312 490 M 725 230 L 725 490" stroke="#64748b" stroke-width="2"/>
+    <path d="M 312 490 L 450 510 M 725 490 L 450 510" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="375" y="510" width="150" height="50" rx="6" fill="#8b5cf6" opacity="0.9"/>
+    <text x="450" y="535" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Attention × V</text>
+    <text x="450" y="550" text-anchor="middle" fill="#ffffff" font-size="11">(seq_len, d_v)</text>
+  </g>
+
+  <!-- Output -->
+  <g data-code-line="15,16">
+    <path d="M 450 570 L 450 600" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="375" y="600" width="150" height="50" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="3"/>
+    <text x="450" y="625" text-anchor="middle" fill="#a855f7" font-size="16" font-weight="bold">Output</text>
+    <text x="450" y="640" text-anchor="middle" fill="#94a3b8" font-size="11">加权后的表示</text>
+  </g>
+
+  <!-- Key insight -->
+  <g transform="translate(50, 670)">
+    <text x="0" y="0" fill="#94a3b8" font-size="12">核心思想：Query 查询与 Key 匹配，得到注意力权重，用权重加权 Value</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

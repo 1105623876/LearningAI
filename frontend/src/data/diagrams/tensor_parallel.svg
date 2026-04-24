@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Tensor Parallel MLP</text>
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">按列切分权重，多GPU并行计算</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">Megatron-LM的核心技术</text>
+  </g>
+  <g data-code-line="4,5">
+    <rect x="300" y="160" width="200" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="190" text-anchor="middle" fill="#e2e8f0" font-size="14">Input x</text>
+  </g>
+  <g data-code-line="6,7,8">
+    <path d="M 350 220 L 250 260 M 450 220 L 550 260" stroke="#64748b" stroke-width="2"/>
+    <rect x="150" y="260" width="200" height="60" rx="6" fill="#3b82f6" opacity="0.9"/>
+    <text x="250" y="285" text-anchor="middle" fill="#ffffff" font-size="12">GPU 0: W₁[:, :d/2]</text>
+    <text x="250" y="305" text-anchor="middle" fill="#cbd5e1" font-size="10">前半列</text>
+    <rect x="450" y="260" width="200" height="60" rx="6" fill="#8b5cf6" opacity="0.9"/>
+    <text x="550" y="285" text-anchor="middle" fill="#ffffff" font-size="12">GPU 1: W₁[:, d/2:]</text>
+    <text x="550" y="305" text-anchor="middle" fill="#cbd5e1" font-size="10">后半列</text>
+  </g>
+  <g data-code-line="9,10">
+    <path d="M 250 330 L 400 370 M 550 330 L 400 370" stroke="#64748b" stroke-width="2"/>
+    <rect x="300" y="370" width="200" height="50" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="400" text-anchor="middle" fill="#10b981" font-size="14">All-Reduce</text>
+  </g>
+  <g transform="translate(50, 445)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：按列切分权重到多GPU，并行计算后All-Reduce聚合，支持超大模型</text>
+  </g>
+</svg>

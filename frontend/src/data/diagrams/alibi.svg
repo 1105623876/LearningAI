@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="alibiGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">ALiBi (Attention with Linear Biases)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">score = QK^T / √d_k + bias</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">bias = -m · |i - j|  (m是每个头的斜率)</text>
+  </g>
+
+  <g data-code-line="4,5,6,7">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">Attention矩阵 + 线性偏置:</text>
+
+    <rect x="100" y="190" width="280" height="200" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="240" y="215" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="bold">原始Attention分数</text>
+
+    <rect x="120" y="230" width="40" height="40" fill="#10b981" opacity="0.8"/>
+    <rect x="170" y="230" width="40" height="40" fill="#3b82f6" opacity="0.6"/>
+    <rect x="220" y="230" width="40" height="40" fill="#3b82f6" opacity="0.4"/>
+    <rect x="270" y="230" width="40" height="40" fill="#3b82f6" opacity="0.2"/>
+
+    <rect x="120" y="280" width="40" height="40" fill="#3b82f6" opacity="0.6"/>
+    <rect x="170" y="280" width="40" height="40" fill="#10b981" opacity="0.8"/>
+    <rect x="220" y="280" width="40" height="40" fill="#3b82f6" opacity="0.6"/>
+    <rect x="270" y="280" width="40" height="40" fill="#3b82f6" opacity="0.4"/>
+
+    <text x="140" y="255" text-anchor="middle" fill="#ffffff" font-size="10">0.9</text>
+    <text x="190" y="255" text-anchor="middle" fill="#ffffff" font-size="10">0.5</text>
+    <text x="240" y="255" text-anchor="middle" fill="#ffffff" font-size="10">0.3</text>
+    <text x="290" y="255" text-anchor="middle" fill="#ffffff" font-size="10">0.1</text>
+  </g>
+
+  <text x="400" y="300" text-anchor="middle" fill="#8b5cf6" font-size="20" font-weight="bold">+</text>
+
+  <g data-code-line="8,9,10">
+    <rect x="420" y="190" width="280" height="200" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="560" y="215" text-anchor="middle" fill="#cbd5e1" font-size="12" font-weight="bold">线性偏置 (m=0.5)</text>
+
+    <rect x="440" y="230" width="40" height="40" fill="#1e293b" stroke="#475569"/>
+    <rect x="490" y="230" width="40" height="40" fill="#ef4444" opacity="0.3"/>
+    <rect x="540" y="230" width="40" height="40" fill="#ef4444" opacity="0.5"/>
+    <rect x="590" y="230" width="40" height="40" fill="#ef4444" opacity="0.7"/>
+
+    <rect x="440" y="280" width="40" height="40" fill="#ef4444" opacity="0.3"/>
+    <rect x="490" y="280" width="40" height="40" fill="#1e293b" stroke="#475569"/>
+    <rect x="540" y="280" width="40" height="40" fill="#ef4444" opacity="0.3"/>
+    <rect x="590" y="280" width="40" height="40" fill="#ef4444" opacity="0.5"/>
+
+    <text x="460" y="255" text-anchor="middle" fill="#ffffff" font-size="10">0</text>
+    <text x="510" y="255" text-anchor="middle" fill="#ffffff" font-size="10">-0.5</text>
+    <text x="560" y="255" text-anchor="middle" fill="#ffffff" font-size="10">-1.0</text>
+    <text x="610" y="255" text-anchor="middle" fill="#ffffff" font-size="10">-1.5</text>
+  </g>
+
+  <g data-code-line="11,12,13">
+    <rect x="100" y="420" width="600" height="140" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="445" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="bold">ALiBi 特点:</text>
+
+    <text x="120" y="470" fill="#cbd5e1" font-size="11">• 无需位置编码：直接在attention分数上加偏置</text>
+    <text x="120" y="490" fill="#cbd5e1" font-size="11">• 距离惩罚：距离越远，偏置越负，attention权重越小</text>
+    <text x="120" y="510" fill="#cbd5e1" font-size="11">• 外推性强：训练512，推理可扩展到2048+</text>
+    <text x="120" y="530" fill="#cbd5e1" font-size="11">• 不同头使用不同斜率m：捕获不同尺度的位置关系</text>
+    <text x="120" y="550" fill="#cbd5e1" font-size="11">• BLOOM模型使用</text>
+  </g>
+
+  <g transform="translate(50, 585)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：通过线性偏置惩罚远距离token，简单高效，外推性能优秀</text>
+  </g>
+  <g transform="translate(50, 602)">
+    <text x="0" y="0" fill="#64748b" font-size="10">对比RoPE：ALiBi更简单，但RoPE在某些任务上表现更好</text>
+  </g>
+</svg>

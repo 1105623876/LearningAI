@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="convGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">2D Convolution</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">卷积核滑动提取局部特征</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">CNN的基础操作</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输入 (5×5):</text>
+    <rect x="100" y="190" width="150" height="150" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="110" y="200" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="140" y="200" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="170" y="200" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="110" y="230" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="140" y="230" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="170" y="230" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="110" y="260" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="140" y="260" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+    <rect x="170" y="260" width="25" height="25" fill="#3b82f6" opacity="0.3"/>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <text x="300" y="220" fill="#94a3b8" font-size="14" font-weight="bold">卷积核 (3×3):</text>
+    <rect x="300" y="240" width="90" height="90" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+
+    <text x="330" y="265" text-anchor="middle" fill="#10b981" font-size="10">1</text>
+    <text x="360" y="265" text-anchor="middle" fill="#10b981" font-size="10">0</text>
+    <text x="390" y="265" text-anchor="middle" fill="#10b981" font-size="10">-1</text>
+    <text x="330" y="290" text-anchor="middle" fill="#10b981" font-size="10">1</text>
+    <text x="360" y="290" text-anchor="middle" fill="#10b981" font-size="10">0</text>
+    <text x="390" y="290" text-anchor="middle" fill="#10b981" font-size="10">-1</text>
+    <text x="330" y="315" text-anchor="middle" fill="#10b981" font-size="10">1</text>
+    <text x="360" y="315" text-anchor="middle" fill="#10b981" font-size="10">0</text>
+    <text x="390" y="315" text-anchor="middle" fill="#10b981" font-size="10">-1</text>
+  </g>
+
+  <g data-code-line="10,11,12">
+    <path d="M 260 270 L 420 270" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="340" y="260" text-anchor="middle" fill="#f59e0b" font-size="11">滑动</text>
+
+    <text x="450" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输出 (3×3):</text>
+    <rect x="450" y="190" width="90" height="90" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+
+    <rect x="460" y="200" width="20" height="20" fill="#8b5cf6" opacity="0.8"/>
+    <rect x="490" y="200" width="20" height="20" fill="#8b5cf6" opacity="0.6"/>
+    <rect x="520" y="200" width="20" height="20" fill="#8b5cf6" opacity="0.4"/>
+    <rect x="460" y="230" width="20" height="20" fill="#8b5cf6" opacity="0.6"/>
+    <rect x="490" y="230" width="20" height="20" fill="#8b5cf6" opacity="0.8"/>
+    <rect x="520" y="230" width="20" height="20" fill="#8b5cf6" opacity="0.6"/>
+    <rect x="460" y="260" width="20" height="20" fill="#8b5cf6" opacity="0.4"/>
+    <rect x="490" y="260" width="20" height="20" fill="#8b5cf6" opacity="0.6"/>
+    <rect x="520" y="260" width="20" height="20" fill="#8b5cf6" opacity="0.8"/>
+  </g>
+
+  <g data-code-line="13,14,15">
+    <rect x="100" y="360" width="600" height="120" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="385" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">参数:</text>
+    <text x="120" y="410" fill="#cbd5e1" font-size="11">• kernel_size: 卷积核大小 (3×3, 5×5, 7×7)</text>
+    <text x="120" y="430" fill="#cbd5e1" font-size="11">• stride: 步长，控制滑动距离</text>
+    <text x="120" y="450" fill="#cbd5e1" font-size="11">• padding: 填充，保持输出尺寸</text>
+    <text x="120" y="470" fill="#cbd5e1" font-size="11">• 参数量: kernel_size² × in_channels × out_channels</text>
+  </g>
+
+  <g data-code-line="16,17">
+    <rect x="100" y="500" width="600" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="525" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">应用:</text>
+    <text x="400" y="545" text-anchor="middle" fill="#cbd5e1" font-size="11">图像分类、目标检测、图像分割等CV任务的基础操作</text>
+  </g>
+
+  <g transform="translate(50, 575)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：局部感受野，参数共享，提取空间特征</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

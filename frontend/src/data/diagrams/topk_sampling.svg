@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="topkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Top-k / Top-p Sampling</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">限制采样范围，平衡质量和多样性</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">Top-k: 保留前k个，Top-p: 保留累积概率≥p的token</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">原始概率分布:</text>
+    <rect x="100" y="190" width="600" height="120" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="120" y="210" width="100" height="30" rx="4" fill="#10b981" opacity="0.9"/>
+    <text x="170" y="230" text-anchor="middle" fill="#ffffff" font-size="11">cat: 0.35</text>
+
+    <rect x="230" y="210" width="80" height="30" rx="4" fill="#10b981" opacity="0.7"/>
+    <text x="270" y="230" text-anchor="middle" fill="#ffffff" font-size="11">dog: 0.25</text>
+
+    <rect x="320" y="210" width="70" height="30" rx="4" fill="#10b981" opacity="0.5"/>
+    <text x="355" y="230" text-anchor="middle" fill="#ffffff" font-size="11">bird: 0.15</text>
+
+    <rect x="400" y="210" width="60" height="30" rx="4" fill="#64748b" opacity="0.3"/>
+    <text x="430" y="230" text-anchor="middle" fill="#ffffff" font-size="10">fish: 0.10</text>
+
+    <rect x="470" y="210" width="50" height="30" rx="4" fill="#64748b" opacity="0.2"/>
+    <text x="495" y="230" text-anchor="middle" fill="#ffffff" font-size="10">...: 0.15</text>
+
+    <text x="400" y="270" text-anchor="middle" fill="#94a3b8" font-size="11">vocab_size = 50000 tokens</text>
+    <text x="400" y="290" text-anchor="middle" fill="#ef4444" font-size="11">问题：低概率token也可能被采样，质量不稳定</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <text x="100" y="340" fill="#94a3b8" font-size="14" font-weight="bold">Top-k Sampling (k=3):</text>
+    <rect x="100" y="360" width="280" height="100" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+
+    <rect x="120" y="380" width="80" height="25" rx="4" fill="#10b981" opacity="0.9"/>
+    <text x="160" y="397" text-anchor="middle" fill="#ffffff" font-size="10">cat: 0.47</text>
+
+    <rect x="210" y="380" width="70" height="25" rx="4" fill="#10b981" opacity="0.7"/>
+    <text x="245" y="397" text-anchor="middle" fill="#ffffff" font-size="10">dog: 0.33</text>
+
+    <rect x="290" y="380" width="70" height="25" rx="4" fill="#10b981" opacity="0.5"/>
+    <text x="325" y="397" text-anchor="middle" fill="#ffffff" font-size="10">bird: 0.20</text>
+
+    <text x="240" y="430" text-anchor="middle" fill="#cbd5e1" font-size="10">只从前3个token中采样</text>
+    <text x="240" y="445" text-anchor="middle" fill="#94a3b8" font-size="9">重新归一化概率</text>
+  </g>
+
+  <g data-code-line="10,11,12">
+    <text x="420" y="340" fill="#94a3b8" font-size="14" font-weight="bold">Top-p Sampling (p=0.9):</text>
+    <rect x="420" y="360" width="280" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+
+    <rect x="440" y="380" width="80" height="25" rx="4" fill="#10b981" opacity="0.9"/>
+    <text x="480" y="397" text-anchor="middle" fill="#ffffff" font-size="10">cat: 0.35</text>
+
+    <rect x="530" y="380" width="70" height="25" rx="4" fill="#10b981" opacity="0.7"/>
+    <text x="565" y="397" text-anchor="middle" fill="#ffffff" font-size="10">dog: 0.25</text>
+
+    <rect x="610" y="380" width="70" height="25" rx="4" fill="#10b981" opacity="0.5"/>
+    <text x="645" y="397" text-anchor="middle" fill="#ffffff" font-size="10">bird: 0.15</text>
+
+    <text x="560" y="420" text-anchor="middle" fill="#cbd5e1" font-size="10">累积概率0.35+0.25+0.15=0.75</text>
+    <text x="560" y="435" text-anchor="middle" fill="#94a3b8" font-size="9">继续添加直到≥0.9</text>
+    <text x="560" y="450" text-anchor="middle" fill="#94a3b8" font-size="9">动态调整候选数量</text>
+  </g>
+
+  <g data-code-line="13,14,15">
+    <rect x="100" y="480" width="600" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="505" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比:</text>
+
+    <text x="120" y="530" fill="#cbd5e1" font-size="11">• 贪心: 总选最高概率，输出确定但可能重复</text>
+    <text x="120" y="550" fill="#cbd5e1" font-size="11">• Top-k: 固定候选数，简单但不够灵活</text>
+    <text x="120" y="570" fill="#cbd5e1" font-size="11">• Top-p (Nucleus): 动态候选数，更自然多样</text>
+  </g>
+
+  <g data-code-line="16,17">
+    <rect x="100" y="600" width="600" height="50" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="630" text-anchor="middle" fill="#cbd5e1" font-size="11">常用组合: temperature=0.7 + top_p=0.9，ChatGPT默认策略</text>
+  </g>
+
+  <g transform="translate(50, 665)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：限制采样范围到高质量token，避免低概率噪声，提升生成质量</text>
+  </g>
+</svg>

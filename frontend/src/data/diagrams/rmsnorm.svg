@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="rmsnormGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">RMSNorm (Root Mean Square Normalization)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="18" font-family="monospace">RMSNorm(x) = x / RMS(x) · γ</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">RMS(x) = √(Σx²/n)，无需计算均值</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输入:</text>
+    <rect x="100" y="190" width="600" height="60" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="monospace">[2.0, -1.0, 3.0, 0.5]</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 400 260 L 400 290" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="250" y="290" width="300" height="80" rx="6" fill="url(#rmsnormGrad)" opacity="0.9"/>
+    <text x="400" y="320" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">计算 RMS</text>
+    <text x="400" y="340" text-anchor="middle" fill="#ffffff" font-size="12">√((4+1+9+0.25)/4)</text>
+    <text x="400" y="360" text-anchor="middle" fill="#cbd5e1" font-size="11">= √3.56 ≈ 1.89</text>
+  </g>
+
+  <g data-code-line="10,11">
+    <path d="M 400 380 L 400 410" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="100" y="410" width="600" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="445" text-anchor="middle" fill="#10b981" font-size="14" font-family="monospace">[1.06, -0.53, 1.59, 0.26] · γ</text>
+  </g>
+
+  <g data-code-line="12,13,14">
+    <rect x="100" y="490" width="650" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="515" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">对比 LayerNorm:</text>
+    <text x="120" y="540" fill="#cbd5e1" font-size="11">• LayerNorm: 减均值 + 除标准差，需要计算均值和方差</text>
+    <text x="120" y="560" fill="#cbd5e1" font-size="11">• RMSNorm: 只除RMS，无需均值，计算更快</text>
+    <text x="120" y="580" fill="#cbd5e1" font-size="11">• LLaMA使用RMSNorm，速度提升约10-15%</text>
+  </g>
+
+  <g transform="translate(50, 605)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：简化LayerNorm，去掉均值计算，只用RMS归一化，更快更简单</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

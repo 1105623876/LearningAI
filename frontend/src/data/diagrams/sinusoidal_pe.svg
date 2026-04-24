@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="sinGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cosGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Positional Encoding (正弦位置编码)</text>
+
+  <!-- Formula -->
+  <g data-code-line="1,2,3,4">
+    <rect x="100" y="60" width="700" height="90" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="450" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">PE(pos, 2i) = sin(pos / 10000^(2i/d_model))</text>
+    <text x="450" y="115" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))</text>
+    <text x="450" y="140" text-anchor="middle" fill="#94a3b8" font-size="13">pos: 位置索引, i: 维度索引, d_model: 模型维度</text>
+  </g>
+
+  <!-- Token embeddings -->
+  <g data-code-line="5,6">
+    <rect x="100" y="180" width="300" height="80" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="250" y="210" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Token Embeddings</text>
+    <text x="250" y="230" text-anchor="middle" fill="#94a3b8" font-size="11">(seq_len, d_model)</text>
+    <text x="250" y="250" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[[0.2, 0.5, ...], [0.8, -0.3, ...]]</text>
+  </g>
+
+  <!-- Positional encoding -->
+  <g data-code-line="7,8,9,10">
+    <rect x="500" y="180" width="300" height="80" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="650" y="210" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Positional Encoding</text>
+    <text x="650" y="230" text-anchor="middle" fill="#94a3b8" font-size="11">(seq_len, d_model)</text>
+    <text x="650" y="250" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[[sin(0), cos(0), ...], [sin(1), cos(1), ...]]</text>
+  </g>
+
+  <!-- Addition -->
+  <g data-code-line="11,12">
+    <path d="M 250 270 L 250 320 M 650 270 L 650 320" stroke="#64748b" stroke-width="2"/>
+    <path d="M 250 320 L 450 350 M 650 320 L 450 350" stroke="#64748b" stroke-width="2"/>
+
+    <circle cx="450" cy="350" r="30" fill="#10b981" opacity="0.9"/>
+    <text x="450" y="360" text-anchor="middle" fill="#ffffff" font-size="24" font-weight="bold">+</text>
+  </g>
+
+  <!-- Output -->
+  <g data-code-line="13,14">
+    <path d="M 450 390 L 450 420" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="300" y="420" width="300" height="60" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="3"/>
+    <text x="450" y="450" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">Token + Position</text>
+    <text x="450" y="470" text-anchor="middle" fill="#94a3b8" font-size="11">包含位置信息的表示</text>
+  </g>
+
+  <!-- Sine/Cosine waves visualization -->
+  <g data-code-line="7,8,9,10">
+    <text x="100" y="520" fill="#94a3b8" font-size="13" font-weight="bold">不同维度的正弦/余弦波形:</text>
+
+    <!-- Sine wave (low frequency) -->
+    <path d="M 100 550 Q 150 530 200 550 T 300 550 T 400 550 T 500 550"
+          stroke="url(#sinGrad)" stroke-width="3" fill="none"/>
+    <text x="520" y="555" fill="#ef4444" font-size="11">sin (低频)</text>
+
+    <!-- Cosine wave (high frequency) -->
+    <path d="M 100 590 Q 120 580 140 590 T 180 590 T 220 590 T 260 590 T 300 590 T 340 590 T 380 590 T 420 590 T 460 590 T 500 590"
+          stroke="url(#cosGrad)" stroke-width="3" fill="none"/>
+    <text x="520" y="595" fill="#3b82f6" font-size="11">cos (高频)</text>
+  </g>
+
+  <!-- Key insight -->
+  <g transform="translate(50, 625)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：用不同频率的正弦/余弦函数编码位置，模型可学习相对位置关系</text>
+  </g>
+  <g transform="translate(50, 642)">
+    <text x="0" y="0" fill="#64748b" font-size="10">优点：可外推到训练时未见过的序列长度，计算高效</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

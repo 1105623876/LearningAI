@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <linearGradient id="moeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Mixture of Experts (MoE)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">稀疏激活，每个token只使用部分专家</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">用更多参数但保持计算量不变</text>
+  </g>
+
+  <g data-code-line="4,5">
+    <rect x="300" y="160" width="200" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="190" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Input Token</text>
+  </g>
+
+  <g data-code-line="6,7,8">
+    <path d="M 400 220 L 400 250" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="300" y="250" width="200" height="60" rx="6" fill="#3b82f6" opacity="0.9"/>
+    <text x="400" y="275" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Router (Gate)</text>
+    <text x="400" y="295" text-anchor="middle" fill="#cbd5e1" font-size="11">选择top-k个专家</text>
+  </g>
+
+  <g data-code-line="9,10,11">
+    <path d="M 350 320 L 150 360 M 400 320 L 400 360 M 450 320 L 650 360" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="100" y="360" width="100" height="80" rx="6" fill="url(#moeGrad)" opacity="0.9"/>
+    <text x="150" y="390" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">Expert 1</text>
+    <text x="150" y="410" text-anchor="middle" fill="#cbd5e1" font-size="10">FFN</text>
+    <text x="150" y="430" text-anchor="middle" fill="#10b981" font-size="9">权重 0.7</text>
+
+    <rect x="220" y="360" width="100" height="80" rx="6" fill="#64748b" opacity="0.3"/>
+    <text x="270" y="390" text-anchor="middle" fill="#ffffff" font-size="12">Expert 2</text>
+    <text x="270" y="410" text-anchor="middle" fill="#cbd5e1" font-size="10">未激活</text>
+
+    <rect x="350" y="360" width="100" height="80" rx="6" fill="url(#moeGrad)" opacity="0.7"/>
+    <text x="400" y="390" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">Expert 3</text>
+    <text x="400" y="410" text-anchor="middle" fill="#cbd5e1" font-size="10">FFN</text>
+    <text x="400" y="430" text-anchor="middle" fill="#10b981" font-size="9">权重 0.3</text>
+
+    <rect x="480" y="360" width="100" height="80" rx="6" fill="#64748b" opacity="0.3"/>
+    <text x="530" y="390" text-anchor="middle" fill="#ffffff" font-size="12">Expert 4</text>
+    <text x="530" y="410" text-anchor="middle" fill="#cbd5e1" font-size="10">未激活</text>
+
+    <rect x="600" y="360" width="100" height="80" rx="6" fill="#64748b" opacity="0.3"/>
+    <text x="650" y="390" text-anchor="middle" fill="#ffffff" font-size="12">Expert 8</text>
+    <text x="650" y="410" text-anchor="middle" fill="#cbd5e1" font-size="10">未激活</text>
+
+    <text x="400" y="400" text-anchor="middle" fill="#64748b" font-size="14">...</text>
+  </g>
+
+  <g data-code-line="12,13">
+    <path d="M 150 450 L 400 490 M 400 450 L 400 490" stroke="#64748b" stroke-width="2"/>
+    <circle cx="400" cy="490" r="30" fill="#8b5cf6" opacity="0.9"/>
+    <text x="400" y="498" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">Σ</text>
+  </g>
+
+  <g data-code-line="14,15">
+    <path d="M 400 530 L 400 560" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="300" y="560" width="200" height="50" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="590" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Output</text>
+  </g>
+
+  <g data-code-line="16,17,18">
+    <rect x="100" y="630" width="600" height="80" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="655" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">优势:</text>
+    <text x="120" y="680" fill="#cbd5e1" font-size="11">• 参数量大但计算量小: 8个专家但每次只用2个</text>
+    <text x="120" y="700" fill="#cbd5e1" font-size="11">• Mixtral-8x7B: 47B参数，推理成本接近13B模型</text>
+  </g>
+
+  <g transform="translate(50, 725)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：稀疏激活，每个token路由到少数专家，扩大模型容量但保持计算效率</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

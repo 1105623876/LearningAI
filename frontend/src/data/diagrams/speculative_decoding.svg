@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Speculative Decoding</text>
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">小模型猜测，大模型验证，加速推理</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">2-3倍推理加速，输出分布不变</text>
+  </g>
+  <g data-code-line="4,5,6">
+    <rect x="100" y="160" width="280" height="100" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="240" y="190" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">Draft Model (小)</text>
+    <text x="240" y="215" text-anchor="middle" fill="#cbd5e1" font-size="11">快速生成k个token</text>
+    <text x="240" y="235" text-anchor="middle" fill="#cbd5e1" font-size="11">例: 1B模型</text>
+  </g>
+  <g data-code-line="7,8,9">
+    <rect x="420" y="160" width="280" height="100" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="560" y="190" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">Target Model (大)</text>
+    <text x="560" y="215" text-anchor="middle" fill="#cbd5e1" font-size="11">并行验证k个token</text>
+    <text x="560" y="235" text-anchor="middle" fill="#cbd5e1" font-size="11">例: 70B模型</text>
+  </g>
+  <g data-code-line="10,11,12">
+    <rect x="100" y="280" width="600" height="120" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="305" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">流程:</text>
+    <text x="120" y="330" fill="#cbd5e1" font-size="11">1. Draft模型生成k=4个候选token</text>
+    <text x="120" y="350" fill="#cbd5e1" font-size="11">2. Target模型并行验证这4个token</text>
+    <text x="120" y="370" fill="#cbd5e1" font-size="11">3. 接受正确的前缀，拒绝后续错误token</text>
+    <text x="120" y="390" fill="#cbd5e1" font-size="11">4. 平均接受2-3个token，加速2-3倍</text>
+  </g>
+  <g transform="translate(50, 425)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：小模型猜测多个token，大模型并行验证，加速推理且输出分布不变</text>
+  </g>
+</svg>

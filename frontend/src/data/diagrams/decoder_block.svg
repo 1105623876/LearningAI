@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" class="w-full h-auto">
+  <defs>
+    <linearGradient id="decGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Transformer Decoder Block</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="325" y="80" width="250" height="50" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="450" y="110" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="bold">Output + Positional Encoding</text>
+  </g>
+
+  <path d="M 450 140 L 450 170" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <g data-code-line="4,5,6,7">
+    <rect x="300" y="170" width="300" height="80" rx="8" fill="url(#decGrad)" opacity="0.9"/>
+    <text x="450" y="200" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Masked Self-Attention</text>
+    <text x="450" y="220" text-anchor="middle" fill="#ffffff" font-size="12">只能看到之前的token</text>
+    <text x="450" y="238" text-anchor="middle" fill="#cbd5e1" font-size="10">(Q=K=V from decoder input)</text>
+  </g>
+
+  <g data-code-line="8,9">
+    <path d="M 150 210 L 150 300 L 380 300" stroke="#10b981" stroke-width="3" stroke-dasharray="6,3"/>
+  </g>
+
+  <circle cx="450" cy="300" r="25" fill="#8b5cf6" opacity="0.9"/>
+  <text x="450" y="308" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">+</text>
+
+  <path d="M 450 335 L 450 365" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <g data-code-line="10,11">
+    <rect x="350" y="365" width="200" height="50" rx="6" fill="#334155"/>
+    <text x="450" y="395" text-anchor="middle" fill="#cbd5e1" font-size="14" font-weight="bold">Layer Norm</text>
+  </g>
+
+  <path d="M 450 425 L 450 455" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <g data-code-line="12,13,14,15">
+    <rect x="300" y="455" width="300" height="80" rx="8" fill="url(#decGrad)" opacity="0.9"/>
+    <text x="450" y="485" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Cross-Attention</text>
+    <text x="450" y="505" text-anchor="middle" fill="#ffffff" font-size="12">Q from decoder, K,V from encoder</text>
+    <text x="450" y="523" text-anchor="middle" fill="#cbd5e1" font-size="10">连接编码器和解码器</text>
+  </g>
+
+  <g data-code-line="12,13">
+    <path d="M 100 495 L 290 495" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)"/>
+    <text x="195" y="485" text-anchor="middle" fill="#3b82f6" font-size="11">Encoder Output (K,V)</text>
+  </g>
+
+  <g data-code-line="16,17">
+    <path d="M 750 495 L 750 585 L 480 585" stroke="#10b981" stroke-width="3" stroke-dasharray="6,3"/>
+  </g>
+
+  <circle cx="450" cy="585" r="25" fill="#8b5cf6" opacity="0.9"/>
+  <text x="450" y="593" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">+</text>
+
+  <path d="M 450 620 L 450 650" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <g data-code-line="18,19">
+    <rect x="350" y="650" width="200" height="50" rx="6" fill="#334155"/>
+    <text x="450" y="680" text-anchor="middle" fill="#cbd5e1" font-size="14" font-weight="bold">Layer Norm</text>
+  </g>
+
+  <path d="M 450 710 L 450 740" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <g data-code-line="20,21,22">
+    <rect x="300" y="740" width="300" height="80" rx="8" fill="url(#decGrad)" opacity="0.9"/>
+    <text x="450" y="770" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Feed-Forward Network</text>
+    <text x="450" y="790" text-anchor="middle" fill="#ffffff" font-size="12">Linear → ReLU → Linear</text>
+  </g>
+
+  <g data-code-line="23,24">
+    <path d="M 150 780 L 150 870 L 380 870" stroke="#10b981" stroke-width="3" stroke-dasharray="6,3"/>
+  </g>
+
+  <circle cx="450" cy="870" r="25" fill="#8b5cf6" opacity="0.9"/>
+  <text x="450" y="878" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">+</text>
+
+  <g transform="translate(50, 920)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心结构：Masked Self-Attention + Cross-Attention + FFN，自回归生成</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3b82f6" />
+    </marker>
+  </defs>
+</svg>

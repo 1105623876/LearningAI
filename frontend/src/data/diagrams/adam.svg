@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="adamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Adam Optimizer</text>
+
+  <g data-code-line="1,2,3,4">
+    <rect x="100" y="60" width="600" height="90" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">m_t = β₁m_{t-1} + (1-β₁)g_t</text>
+    <text x="400" y="115" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">v_t = β₂v_{t-1} + (1-β₂)g_t²</text>
+    <text x="400" y="140" text-anchor="middle" fill="#94a3b8" font-size="13">m: 一阶矩估计(动量), v: 二阶矩估计(方差)</text>
+  </g>
+
+  <g data-code-line="5,6,7">
+    <text x="100" y="190" fill="#94a3b8" font-size="14" font-weight="bold">更新步骤:</text>
+
+    <rect x="100" y="210" width="650" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="425" y="235" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">1. 计算梯度 g_t</text>
+    <text x="425" y="255" text-anchor="middle" fill="#cbd5e1" font-size="11">g_t = ∇L(θ_{t-1})</text>
+  </g>
+
+  <g data-code-line="8,9">
+    <rect x="100" y="290" width="650" height="60" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="425" y="315" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="bold">2. 更新一阶矩 (动量)</text>
+    <text x="425" y="335" text-anchor="middle" fill="#cbd5e1" font-size="11">m_t = 0.9 × m_{t-1} + 0.1 × g_t  (β₁=0.9)</text>
+  </g>
+
+  <g data-code-line="10,11">
+    <rect x="100" y="370" width="650" height="60" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="395" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="bold">3. 更新二阶矩 (方差)</text>
+    <text x="425" y="415" text-anchor="middle" fill="#cbd5e1" font-size="11">v_t = 0.999 × v_{t-1} + 0.001 × g_t²  (β₂=0.999)</text>
+  </g>
+
+  <g data-code-line="12,13,14">
+    <rect x="100" y="450" width="650" height="80" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="425" y="475" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="bold">4. 偏差修正 + 参数更新</text>
+    <text x="425" y="495" text-anchor="middle" fill="#cbd5e1" font-size="11">m̂_t = m_t / (1 - β₁^t),  v̂_t = v_t / (1 - β₂^t)</text>
+    <text x="425" y="515" text-anchor="middle" fill="#cbd5e1" font-size="11">θ_t = θ_{t-1} - α × m̂_t / (√v̂_t + ε)</text>
+  </g>
+
+  <g data-code-line="15,16,17">
+    <rect x="100" y="550" width="650" height="80" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="425" y="575" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">特点:</text>
+
+    <text x="120" y="600" fill="#cbd5e1" font-size="11">• 自适应学习率：每个参数独立调整步长</text>
+    <text x="120" y="620" fill="#cbd5e1" font-size="11">• 结合动量和RMSProp优点，训练稳定高效</text>
+  </g>
+
+  <g transform="translate(50, 645)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：结合一阶矩(动量)和二阶矩(自适应学习率)，深度学习最常用优化器</text>
+  </g>
+</svg>

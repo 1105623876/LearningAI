@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <linearGradient id="beamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Beam Search Decoding</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">保留top-k个候选序列，探索多条路径</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">平衡质量和多样性的解码策略</text>
+  </g>
+
+  <g data-code-line="4,5">
+    <rect x="350" y="160" width="100" height="40" rx="6" fill="#3b82f6" opacity="0.9"/>
+    <text x="400" y="185" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">[START]</text>
+  </g>
+
+  <g data-code-line="6,7,8">
+    <path d="M 350 210 L 200 250 M 400 210 L 400 250 M 450 210 L 600 250" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="150" y="250" width="100" height="40" rx="6" fill="#10b981" opacity="0.8"/>
+    <text x="200" y="270" text-anchor="middle" fill="#ffffff" font-size="10">The</text>
+    <text x="200" y="285" text-anchor="middle" fill="#cbd5e1" font-size="9">p=0.6</text>
+
+    <rect x="350" y="250" width="100" height="40" rx="6" fill="#10b981" opacity="0.6"/>
+    <text x="400" y="270" text-anchor="middle" fill="#ffffff" font-size="10">A</text>
+    <text x="400" y="285" text-anchor="middle" fill="#cbd5e1" font-size="9">p=0.3</text>
+
+    <rect x="550" y="250" width="100" height="40" rx="6" fill="#64748b" opacity="0.4"/>
+    <text x="600" y="270" text-anchor="middle" fill="#ffffff" font-size="10">In</text>
+    <text x="600" y="285" text-anchor="middle" fill="#cbd5e1" font-size="9">p=0.1</text>
+    <line x1="550" y1="260" x2="650" y2="280" stroke="#ef4444" stroke-width="2"/>
+    <text x="680" y="270" fill="#ef4444" font-size="9">剪枝</text>
+  </g>
+
+  <g data-code-line="9,10,11">
+    <path d="M 200 300 L 150 340 M 200 300 L 250 340 M 400 300 L 350 340 M 400 300 L 450 340" stroke="#64748b" stroke-width="2"/>
+
+    <rect x="100" y="340" width="100" height="40" rx="6" fill="#10b981" opacity="0.9"/>
+    <text x="150" y="360" text-anchor="middle" fill="#ffffff" font-size="9">The cat</text>
+    <text x="150" y="375" text-anchor="middle" fill="#cbd5e1" font-size="8">p=0.48</text>
+
+    <rect x="200" y="340" width="100" height="40" rx="6" fill="#10b981" opacity="0.7"/>
+    <text x="250" y="360" text-anchor="middle" fill="#ffffff" font-size="9">The dog</text>
+    <text x="250" y="375" text-anchor="middle" fill="#cbd5e1" font-size="8">p=0.12</text>
+
+    <rect x="300" y="340" width="100" height="40" rx="6" fill="#64748b" opacity="0.4"/>
+    <text x="350" y="360" text-anchor="middle" fill="#ffffff" font-size="9">A cat</text>
+    <text x="350" y="375" text-anchor="middle" fill="#cbd5e1" font-size="8">p=0.18</text>
+    <line x1="300" y1="350" x2="400" y2="370" stroke="#ef4444" stroke-width="2"/>
+
+    <rect x="400" y="340" width="100" height="40" rx="6" fill="#64748b" opacity="0.3"/>
+    <text x="450" y="360" text-anchor="middle" fill="#ffffff" font-size="9">A dog</text>
+    <text x="450" y="375" text-anchor="middle" fill="#cbd5e1" font-size="8">p=0.12</text>
+    <line x1="400" y1="350" x2="500" y2="370" stroke="#ef4444" stroke-width="2"/>
+  </g>
+
+  <g data-code-line="12,13">
+    <path d="M 150 390 L 150 430 M 250 390 L 250 430" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="100" y="430" width="100" height="40" rx="6" fill="#8b5cf6" opacity="0.9"/>
+    <text x="150" y="455" text-anchor="middle" fill="#ffffff" font-size="9">继续扩展...</text>
+
+    <rect x="200" y="430" width="100" height="40" rx="6" fill="#8b5cf6" opacity="0.7"/>
+    <text x="250" y="455" text-anchor="middle" fill="#ffffff" font-size="9">继续扩展...</text>
+  </g>
+
+  <g data-code-line="14,15,16">
+    <rect x="100" y="500" width="600" height="120" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="525" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">参数:</text>
+
+    <text x="120" y="550" fill="#cbd5e1" font-size="11">• beam_size (k): 保留的候选数，通常3-10</text>
+    <text x="120" y="570" fill="#cbd5e1" font-size="11">• 每步扩展k个候选，每个候选生成vocab_size个后继</text>
+    <text x="120" y="590" fill="#cbd5e1" font-size="11">• 选择概率最高的k个序列继续，其余剪枝</text>
+    <text x="120" y="610" fill="#cbd5e1" font-size="11">• 对比贪心: beam_size=1，只保留最优路径</text>
+  </g>
+
+  <g data-code-line="17,18">
+    <rect x="100" y="640" width="600" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="665" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">应用:</text>
+    <text x="400" y="685" text-anchor="middle" fill="#cbd5e1" font-size="11">机器翻译、摘要生成等需要高质量输出的任务</text>
+  </g>
+
+  <g transform="translate(50, 715)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：保留多条候选路径，避免贪心解码的局部最优，提升生成质量</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

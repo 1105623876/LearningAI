@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="vitGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">ViT Patch Embedding</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">将图像切分为patches，线性投影为向量</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">Vision Transformer的输入层</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输入图像 (224×224×3):</text>
+    <rect x="100" y="190" width="200" height="200" rx="6" fill="#3b82f6" opacity="0.3" stroke="#64748b" stroke-width="2"/>
+
+    <line x1="150" y1="190" x2="150" y2="390" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="200" y1="190" x2="200" y2="390" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="250" y1="190" x2="250" y2="390" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+
+    <line x1="100" y1="240" x2="300" y2="240" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="100" y1="290" x2="300" y2="290" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="100" y1="340" x2="300" y2="340" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+
+    <text x="200" y="410" text-anchor="middle" fill="#94a3b8" font-size="11">切分为16×16 patches</text>
+    <text x="200" y="425" text-anchor="middle" fill="#94a3b8" font-size="11">(14×14 = 196个patches)</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 310 290 L 370 290" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="370" y="190" width="330" height="200" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="535" y="215" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">Linear Projection</text>
+
+    <rect x="390" y="230" width="270" height="30" rx="4" fill="#334155"/>
+    <text x="525" y="250" text-anchor="middle" fill="#cbd5e1" font-size="10">Patch 1 (16×16×3) → 768维向量</text>
+
+    <rect x="390" y="270" width="270" height="30" rx="4" fill="#334155"/>
+    <text x="525" y="290" text-anchor="middle" fill="#cbd5e1" font-size="10">Patch 2 (16×16×3) → 768维向量</text>
+
+    <text x="525" y="325" text-anchor="middle" fill="#64748b" font-size="14">...</text>
+
+    <rect x="390" y="340" width="270" height="30" rx="4" fill="#334155"/>
+    <text x="525" y="360" text-anchor="middle" fill="#cbd5e1" font-size="10">Patch 196 (16×16×3) → 768维向量</text>
+  </g>
+
+  <g data-code-line="10,11">
+    <path d="M 535 400 L 535 430" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="385" y="430" width="300" height="60" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="3"/>
+    <text x="535" y="455" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">Patch Embeddings</text>
+    <text x="535" y="475" text-anchor="middle" fill="#94a3b8" font-size="11">(196, 768) + [CLS] token + Position Encoding</text>
+  </g>
+
+  <g data-code-line="12,13">
+    <rect x="100" y="510" width="600" height="80" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="535" text-anchor="middle" fill="#10b981" font-size="13" font-weight="bold">关键参数:</text>
+    <text x="120" y="560" fill="#cbd5e1" font-size="11">• Patch size: 16×16 (ViT-B/16) 或 32×32 (ViT-B/32)</text>
+    <text x="120" y="580" fill="#cbd5e1" font-size="11">• Embedding dim: 768 (Base) / 1024 (Large)</text>
+  </g>
+
+  <g transform="translate(50, 605)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：将图像视为patch序列，用Transformer处理，无需卷积</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>

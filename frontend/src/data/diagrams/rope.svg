@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <linearGradient id="ropeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">RoPE (Rotary Position Embedding)</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">RoPE(x, m) = R(θ, m) · x</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">通过旋转矩阵编码相对位置信息</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">2D旋转示例:</text>
+
+    <circle cx="250" cy="280" r="80" stroke="#475569" stroke-width="2" fill="none"/>
+    <line x1="250" y1="280" x2="250" y2="200" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="170" y1="280" x2="330" y2="280" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+
+    <line x1="250" y1="280" x2="310" y2="240" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowRed)"/>
+    <text x="320" y="235" fill="#ef4444" font-size="12">原始向量</text>
+
+    <line x1="250" y1="280" x2="290" y2="320" stroke="#10b981" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <text x="300" y="335" fill="#10b981" font-size="12">旋转后</text>
+
+    <path d="M 280 270 A 30 30 0 0 1 270 300" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+    <text x="285" y="295" fill="#8b5cf6" font-size="11">θ·m</text>
+  </g>
+
+  <g data-code-line="7,8,9,10">
+    <rect x="400" y="180" width="350" height="200" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="575" y="205" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">旋转矩阵 R(θ, m):</text>
+
+    <text x="575" y="240" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="monospace">┌                    ┐</text>
+    <text x="575" y="260" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="monospace">│ cos(mθ)  -sin(mθ) │</text>
+    <text x="575" y="280" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="monospace">│ sin(mθ)   cos(mθ) │</text>
+    <text x="575" y="300" text-anchor="middle" fill="#cbd5e1" font-size="12" font-family="monospace">└                    ┘</text>
+
+    <text x="575" y="330" text-anchor="middle" fill="#94a3b8" font-size="11">m: 位置索引</text>
+    <text x="575" y="350" text-anchor="middle" fill="#94a3b8" font-size="11">θ: 频率参数 (10000^(-2i/d))</text>
+    <text x="575" y="370" text-anchor="middle" fill="#94a3b8" font-size="11">不同维度使用不同频率</text>
+  </g>
+
+  <g data-code-line="11,12,13">
+    <rect x="100" y="410" width="650" height="110" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="425" y="435" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">RoPE 优势:</text>
+
+    <text x="120" y="460" fill="#cbd5e1" font-size="11">• 相对位置编码：内积保留相对位置信息 (q_m · k_n 只依赖 m-n)</text>
+    <text x="120" y="480" fill="#cbd5e1" font-size="11">• 外推性强：训练长度2k，推理可扩展到8k+</text>
+    <text x="120" y="500" fill="#cbd5e1" font-size="11">• 计算高效：直接应用旋转，无需额外参数</text>
+  </g>
+
+  <g transform="translate(50, 545)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：通过旋转操作编码位置，保留相对位置关系，LLaMA/GPT-NeoX使用</text>
+  </g>
+  <g transform="translate(50, 562)">
+    <text x="0" y="0" fill="#64748b" font-size="10">对比正弦位置编码：RoPE在长文本外推性能更好</text>
+  </g>
+
+  <defs>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#ef4444" />
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981" />
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <linearGradient id="embGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Embedding Layer</text>
+
+  <g data-code-line="1,2,3">
+    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="400" y="90" text-anchor="middle" fill="#f1f5f9" font-size="16" font-family="monospace">将离散token ID映射为连续向量</text>
+    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">Embedding(token_id) = embedding_matrix[token_id]</text>
+  </g>
+
+  <g data-code-line="4,5,6">
+    <text x="100" y="170" fill="#94a3b8" font-size="14" font-weight="bold">输入 (token IDs):</text>
+    <rect x="100" y="190" width="600" height="60" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="monospace">[15496, 2368, 318, 257, 1332]  ("The cat is a pet")</text>
+  </g>
+
+  <g data-code-line="7,8,9">
+    <path d="M 400 260 L 400 290" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="150" y="290" width="500" height="180" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="315" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="bold">Embedding Matrix (vocab_size × d_model)</text>
+
+    <rect x="180" y="330" width="440" height="30" rx="4" fill="#334155"/>
+    <text x="400" y="350" text-anchor="middle" fill="#cbd5e1" font-size="11" font-family="monospace">ID 15496 → [0.23, -0.45, 0.67, ..., 0.12]  (512维)</text>
+
+    <rect x="180" y="370" width="440" height="30" rx="4" fill="#334155"/>
+    <text x="400" y="390" text-anchor="middle" fill="#cbd5e1" font-size="11" font-family="monospace">ID 2368  → [0.89, 0.12, -0.34, ..., 0.56]</text>
+
+    <rect x="180" y="410" width="440" height="30" rx="4" fill="#334155"/>
+    <text x="400" y="430" text-anchor="middle" fill="#cbd5e1" font-size="11" font-family="monospace">ID 318   → [-0.12, 0.78, 0.23, ..., -0.45]</text>
+
+    <text x="400" y="460" text-anchor="middle" fill="#64748b" font-size="11">...</text>
+  </g>
+
+  <g data-code-line="10,11">
+    <path d="M 400 480 L 400 510" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="100" y="540" fill="#94a3b8" font-size="14" font-weight="bold">输出 (embeddings):</text>
+    <rect x="100" y="550" width="600" height="60" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+    <text x="400" y="585" text-anchor="middle" fill="#10b981" font-size="12">(batch_size, seq_len, d_model) = (1, 5, 512)</text>
+  </g>
+
+  <g transform="translate(50, 625)">
+    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：查表操作，将离散token映射为可学习的连续向量表示</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+</svg>
