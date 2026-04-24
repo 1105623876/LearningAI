@@ -64,10 +64,11 @@ export default function SVGDiagram({ conceptId, svgPath, codeLineMapping, onElem
   }
 
   return (
-    <div
-      id={`svg-${conceptId}`}
-      className="bg-slate-800/50 rounded-xl border border-slate-700 p-8 overflow-auto"
-      dangerouslySetInnerHTML={{ __html: svgContent }}
-    />
+    <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-8 overflow-auto">
+      <div
+        id={`svg-${conceptId}`}
+        dangerouslySetInnerHTML={{ __html: svgContent }}
+      />
+    </div>
   )
 }
