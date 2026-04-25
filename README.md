@@ -94,7 +94,19 @@ LearningAI/
 - [ ] 本地存储（保存用户代码和进度）
 - [ ] 多语言支持（英文界面）
 
-## 最近更新（2026-04-24）
+## 最近更新
+
+### 2026-04-25
+- **完善所有 SVG 图解**：完成 20 个占位符图解的详细可视化
+  - 核心算法类：BPE、Linear Attention、Contrastive Loss、Focal Loss、Flow Matching、DDIM、Noise Schedule
+  - 模型架构类：Mamba SSM、MLA、AdaLN-Zero、Depthwise Conv、QLoRA
+  - 系统优化类：Paged Attention、Ring Attention、FSDP、MoE Load Balance
+  - 训练技术类：Multi-Token Prediction、MCTS、GRPO Loss、Linear Regression
+  - 所有图解包含清晰的流程图、公式标注和核心思想总结
+- **修复图解显示问题**：修复 SwiGLU 等图解的截断问题
+- **整合 pyre-code 依赖**：将所有依赖资源复制到项目内部，实现完全独立运行
+
+### 2026-04-24
 
 ### 整合 pyre-code 实践功能
 
