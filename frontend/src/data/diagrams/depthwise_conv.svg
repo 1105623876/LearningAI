@@ -1,18 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Depthwise Convolution</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 750" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Depthwise Separable Convolution</text>
+
+  <!-- Standard Convolution -->
+  <g data-code-line="1">
+    <rect x="50" y="70" width="330" height="120" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">标准卷积</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">参数量: C_in × C_out × k × k</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">计算量: O(C_in × C_out × k² × H × W)</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">通道间和空间同时卷积</text>
+    <text x="215" y="180" text-anchor="middle" fill="#ef4444" font-size="11">参数多、计算重</text>
+  </g>
+
+  <!-- Depthwise Separable -->
+  <g data-code-line="2,3,4">
+    <rect x="420" y="70" width="330" height="120" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">深度可分离卷积</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">参数量: C_in×k² + C_in×C_out</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">计算量: O(C_in×k²×H×W + C_in×C_out×H×W)</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">分离空间和通道卷积</text>
+    <text x="585" y="180" text-anchor="middle" fill="#10b981" font-size="11">参数少 8-9 倍</text>
+  </g>
+
+  <!-- Input -->
+  <g data-code-line="1">
+    <rect x="300" y="220" width="200" height="60" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="245" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">输入特征图</text>
+    <text x="400" y="265" text-anchor="middle" fill="#cbd5e1" font-size="12">(B, C_in, H, W)</text>
+  </g>
+
+  <!-- Depthwise Conv -->
+  <g data-code-line="2,3">
+    <line x1="400" y1="280" x2="400" y2="310" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="320" width="600" height="120" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="345" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">步骤 1: 深度卷积 (Depthwise)</text>
+    <text x="400" y="370" text-anchor="middle" fill="#cbd5e1" font-size="12">每个输入通道独立卷积，不跨通道</text>
+    <text x="400" y="390" text-anchor="middle" fill="#cbd5e1" font-size="12">权重: (C_in, 1, k, k)</text>
+    <text x="400" y="410" text-anchor="middle" fill="#94a3b8" font-size="11">输出: (B, C_in, H_out, W_out)</text>
+    <text x="400" y="430" text-anchor="middle" fill="#10b981" font-size="11">只处理空间信息，不混合通道</text>
+  </g>
+
+  <!-- Pointwise Conv -->
+  <g data-code-line="4,5">
+    <line x1="400" y1="440" x2="400" y2="470" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="480" width="600" height="120" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="505" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">步骤 2: 逐点卷积 (Pointwise)</text>
+    <text x="400" y="530" text-anchor="middle" fill="#cbd5e1" font-size="12">1×1 卷积混合通道信息</text>
+    <text x="400" y="550" text-anchor="middle" fill="#cbd5e1" font-size="12">权重: (C_out, C_in, 1, 1)</text>
+    <text x="400" y="570" text-anchor="middle" fill="#94a3b8" font-size="11">输出: (B, C_out, H_out, W_out)</text>
+    <text x="400" y="590" text-anchor="middle" fill="#10b981" font-size="11">只处理通道信息，不处理空间</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Depthwise Convolution的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Depthwise Convolution的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Depthwise Convolution的基本原理和应用场景</text>
+    <rect x="50" y="630" width="700" height="100" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="655" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="680" text-anchor="middle" fill="#cbd5e1" font-size="12">将标准卷积分解为深度卷积(空间) + 逐点卷积(通道)</text>
+    <text x="400" y="700" text-anchor="middle" fill="#cbd5e1" font-size="12">大幅减少参数量和计算量，广泛用于 MobileNet 等轻量级模型</text>
   </g>
 </svg>

@@ -1,18 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
   <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Ring Attention</text>
+
+  <!-- Standard attention -->
+  <g data-code-line="1">
+    <rect x="50" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">标准注意力</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">单 GPU 计算全序列</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">显存: O(S²)</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">长序列装不下</text>
+  </g>
+
+  <!-- Ring attention -->
+  <g data-code-line="2,3,4">
+    <rect x="420" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Ring Attention</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">多 GPU 分块计算</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">显存: O(S²/N)</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">支持超长序列</text>
+  </g>
+
+  <!-- Partition -->
+  <g data-code-line="5,6">
+    <rect x="100" y="200" width="600" height="100" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">步骤 1: 分块</text>
+    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">Q_chunks = split(Q, num_devices)</text>
+    <text x="400" y="270" text-anchor="middle" fill="#cbd5e1" font-size="12">K_chunks = split(K, num_devices)</text>
+    <text x="400" y="290" text-anchor="middle" fill="#cbd5e1" font-size="12">V_chunks = split(V, num_devices)</text>
+  </g>
+
+  <!-- Ring communication -->
+  <g data-code-line="7,8,9">
+    <line x1="400" y1="300" x2="400" y2="330" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="340" width="600" height="140" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="365" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">步骤 2: 环形传递 KV</text>
+    <text x="400" y="390" text-anchor="middle" fill="#cbd5e1" font-size="12">每个 GPU 持有固定的 Q_i，循环接收 K_j, V_j</text>
+    <text x="400" y="410" text-anchor="middle" fill="#94a3b8" font-size="11">Round 0: GPU-i 计算 Attention(Q_i, K_i, V_i)</text>
+    <text x="400" y="430" text-anchor="middle" fill="#94a3b8" font-size="11">Round 1: GPU-i 计算 Attention(Q_i, K_{i+1}, V_{i+1})</text>
+    <text x="400" y="450" text-anchor="middle" fill="#94a3b8" font-size="11">...</text>
+    <text x="400" y="470" text-anchor="middle" fill="#10b981" font-size="11">使用在线 softmax 累积结果</text>
+  </g>
+
+  <!-- Online softmax -->
+  <g data-code-line="10,11">
+    <line x1="400" y1="480" x2="400" y2="510" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="520" width="500" height="80" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="545" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">在线 Softmax 累积</text>
+    <text x="400" y="570" text-anchor="middle" fill="#cbd5e1" font-size="12">逐块更新 max, sum, output</text>
+    <text x="400" y="590" text-anchor="middle" fill="#94a3b8" font-size="11">无需存储完整注意力矩阵</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Ring Attention的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Ring Attention的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Ring Attention的基本原理和应用场景</text>
+    <rect x="50" y="620" width="700" height="70" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="645" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="665" text-anchor="middle" fill="#cbd5e1" font-size="12">环形传递 KV 块，每个 GPU 只存 1/N 的 KV，支持百万级 token 序列</text>
   </g>
 </svg>

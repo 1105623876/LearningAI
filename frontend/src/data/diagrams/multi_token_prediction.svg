@@ -1,18 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Multi-Token Prediction</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Multi-Token Prediction Loss</text>
+
+  <!-- Standard next-token -->
+  <g data-code-line="1">
+    <rect x="50" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">标准下一词预测</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">只预测下一个 token</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">1 个预测头</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">训练信号稀疏</text>
+  </g>
+
+  <!-- Multi-token prediction -->
+  <g data-code-line="2,3,4">
+    <rect x="420" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">多词预测</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">同时预测未来 N 个 token</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">N 个独立预测头</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">训练信号更丰富</text>
+  </g>
+
+  <!-- Hidden states -->
+  <g data-code-line="5">
+    <rect x="250" y="200" width="300" height="60" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">隐藏状态</text>
+    <text x="400" y="245" text-anchor="middle" fill="#cbd5e1" font-size="12">hidden_states: (B, S, D)</text>
+  </g>
+
+  <!-- Multiple heads -->
+  <g data-code-line="6,7,8">
+    <line x1="400" y1="260" x2="400" y2="290" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="300" width="600" height="140" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="325" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">N 个预测头</text>
+    <text x="400" y="350" text-anchor="middle" fill="#cbd5e1" font-size="12">head_1: 预测 t+1 位置的 token</text>
+    <text x="400" y="370" text-anchor="middle" fill="#cbd5e1" font-size="12">head_2: 预测 t+2 位置的 token</text>
+    <text x="400" y="390" text-anchor="middle" fill="#cbd5e1" font-size="12">...</text>
+    <text x="400" y="410" text-anchor="middle" fill="#cbd5e1" font-size="12">head_N: 预测 t+N 位置的 token</text>
+    <text x="400" y="430" text-anchor="middle" fill="#94a3b8" font-size="11">每个头独立: logits_i = hidden_states @ head_i</text>
+  </g>
+
+  <!-- Loss computation -->
+  <g data-code-line="9,10">
+    <line x1="400" y1="440" x2="400" y2="470" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="480" width="500" height="100" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="505" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">损失计算</text>
+    <text x="400" y="530" text-anchor="middle" fill="#cbd5e1" font-size="12">loss = Σ CrossEntropy(logits_i, targets[:, i:])</text>
+    <text x="400" y="550" text-anchor="middle" fill="#94a3b8" font-size="11">每个头预测对应位置的目标</text>
+    <text x="400" y="570" text-anchor="middle" fill="#10b981" font-size="11">N 个损失项求和</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Multi-Token Prediction的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Multi-Token Prediction的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Multi-Token Prediction的基本原理和应用场景</text>
+    <rect x="50" y="600" width="700" height="80" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="625" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="650" text-anchor="middle" fill="#cbd5e1" font-size="12">同时预测未来多个 token，增加训练信号密度</text>
+    <text x="400" y="670" text-anchor="middle" fill="#cbd5e1" font-size="12">提升模型对长期依赖的理解，加速训练收敛</text>
   </g>
 </svg>

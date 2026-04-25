@@ -1,18 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
   <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Focal Loss</text>
+
+  <!-- Standard Cross-Entropy -->
+  <g data-code-line="1,2">
+    <rect x="50" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">标准交叉熵</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">CE = -log(p_t)</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">简单样本主导梯度</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">难样本权重不足</text>
+  </g>
+
+  <!-- Focal Loss -->
+  <g data-code-line="5,6,7">
+    <rect x="420" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Focal Loss</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">FL = -(1-p_t)^γ × log(p_t)</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">难样本权重更高</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">解决类别不平衡</text>
+  </g>
+
+  <!-- Probability computation -->
+  <g data-code-line="3,4">
+    <rect x="100" y="200" width="600" height="80" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">步骤 1: 计算概率</text>
+    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">probs = softmax(logits)</text>
+    <text x="400" y="270" text-anchor="middle" fill="#94a3b8" font-size="11">p_t = probs[i, targets[i]] (正确类别的概率)</text>
+  </g>
+
+  <!-- Modulating factor -->
+  <g data-code-line="5,6">
+    <line x1="400" y1="280" x2="400" y2="310" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="320" width="600" height="120" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="345" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">步骤 2: 调制因子 (1-p_t)^γ</text>
+
+    <g transform="translate(150, 360)">
+      <text x="0" y="0" fill="#cbd5e1" font-size="11">• p_t 接近 1 (简单样本) → (1-p_t)^γ ≈ 0 → 权重低</text>
+      <text x="0" y="20" fill="#cbd5e1" font-size="11">• p_t 接近 0 (困难样本) → (1-p_t)^γ ≈ 1 → 权重高</text>
+      <text x="0" y="40" fill="#cbd5e1" font-size="11">• γ=2 是常用值，γ 越大，对简单样本的抑制越强</text>
+      <text x="0" y="60" fill="#10b981" font-size="11" font-weight="bold">• 让模型专注于难分类的样本</text>
+    </g>
+  </g>
+
+  <!-- Alpha balancing -->
+  <g data-code-line="7">
+    <line x1="400" y1="440" x2="400" y2="470" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="480" width="500" height="70" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="505" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">步骤 3: 类别平衡因子 α</text>
+    <text x="400" y="530" text-anchor="middle" fill="#cbd5e1" font-size="12">FL = -α × (1-p_t)^γ × log(p_t)</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Focal Loss的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Focal Loss的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Focal Loss的基本原理和应用场景</text>
+    <rect x="50" y="580" width="700" height="100" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="605" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="630" text-anchor="middle" fill="#cbd5e1" font-size="12">通过调制因子 (1-p_t)^γ 降低简单样本的损失权重</text>
+    <text x="400" y="650" text-anchor="middle" fill="#cbd5e1" font-size="12">让模型专注于困难样本，解决类别不平衡问题</text>
+    <text x="400" y="670" text-anchor="middle" fill="#94a3b8" font-size="11">广泛用于目标检测 (RetinaNet) 等场景</text>
   </g>
 </svg>

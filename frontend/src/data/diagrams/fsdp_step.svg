@@ -1,18 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">FSDP Training</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 750" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">FSDP (Fully Sharded Data Parallel) Training Step</text>
+
+  <!-- DDP vs FSDP -->
+  <g data-code-line="1">
+    <rect x="50" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">DDP (数据并行)</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">每个 GPU 存完整模型</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">显存占用 = 模型大小</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">大模型装不下</text>
+  </g>
+
+  <g data-code-line="2,3,4">
+    <rect x="420" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">FSDP (全分片)</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">每个 GPU 存 1/N 参数</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">显存占用 = 模型大小 / N</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">可训练超大模型</text>
+  </g>
+
+  <!-- All-gather -->
+  <g data-code-line="5,6">
+    <rect x="100" y="200" width="600" height="100" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">步骤 1: All-Gather (重建完整参数)</text>
+    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">full_param = concat(param_shards)</text>
+    <text x="400" y="270" text-anchor="middle" fill="#94a3b8" font-size="11">每个 GPU 收集其他 GPU 的参数分片</text>
+    <text x="400" y="290" text-anchor="middle" fill="#10b981" font-size="11">临时重建完整参数用于前向/反向传播</text>
+  </g>
+
+  <!-- Compute gradient -->
+  <g data-code-line="7,8">
+    <line x1="400" y1="300" x2="400" y2="330" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="340" width="600" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="365" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">步骤 2: 计算梯度</text>
+    <text x="400" y="390" text-anchor="middle" fill="#cbd5e1" font-size="12">grad = grad_fn(full_param)</text>
+    <text x="400" y="410" text-anchor="middle" fill="#94a3b8" font-size="11">使用完整参数计算梯度</text>
+  </g>
+
+  <!-- Reduce-scatter -->
+  <g data-code-line="9,10">
+    <line x1="400" y1="420" x2="400" y2="450" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="460" width="600" height="100" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="485" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">步骤 3: Reduce-Scatter (分发梯度分片)</text>
+    <text x="400" y="510" text-anchor="middle" fill="#cbd5e1" font-size="12">grad_shards = chunk(grad, world_size)</text>
+    <text x="400" y="530" text-anchor="middle" fill="#94a3b8" font-size="11">每个 GPU 只保留自己负责的梯度分片</text>
+    <text x="400" y="550" text-anchor="middle" fill="#10b981" font-size="11">梯度求和 + 分片，节省通信和显存</text>
+  </g>
+
+  <!-- Update -->
+  <g data-code-line="11">
+    <line x1="400" y1="560" x2="400" y2="590" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="200" y="600" width="400" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="625" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">步骤 4: 更新参数分片</text>
+    <text x="400" y="645" text-anchor="middle" fill="#cbd5e1" font-size="12">param_shard -= lr × grad_shard</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">FSDP Training的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是FSDP Training的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：FSDP Training的基本原理和应用场景</text>
+    <rect x="50" y="680" width="700" height="60" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="705" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="725" text-anchor="middle" fill="#cbd5e1" font-size="12">参数、梯度、优化器状态全部分片，显存占用降至 1/N，可训练超大模型</text>
   </g>
 </svg>

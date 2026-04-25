@@ -1,18 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Mamba SSM</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Mamba SSM Step</text>
+
+  <!-- Input state -->
+  <g data-code-line="1,2">
+    <rect x="100" y="70" width="250" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="225" y="95" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">输入</text>
+    <text x="225" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">x: (B, D) 当前输入</text>
+    <text x="225" y="140" text-anchor="middle" fill="#cbd5e1" font-size="12">h: (B, D, N) 隐藏状态</text>
+  </g>
+
+  <!-- Parameters -->
+  <g data-code-line="3,4,5">
+    <rect x="450" y="70" width="250" height="80" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="575" y="95" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">参数 (输入依赖)</text>
+    <text x="575" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">B, C: (B, D, N) 选择性</text>
+    <text x="575" y="140" text-anchor="middle" fill="#cbd5e1" font-size="12">delta: (B, D) 时间步长</text>
+  </g>
+
+  <!-- Discretization -->
+  <g data-code-line="6,7">
+    <line x1="400" y1="150" x2="400" y2="180" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="190" width="600" height="120" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="215" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">离散化 (Zero-Order Hold)</text>
+    <text x="400" y="240" text-anchor="middle" fill="#cbd5e1" font-size="12">dA = exp(delta.unsqueeze(-1) × A.unsqueeze(0))</text>
+    <text x="400" y="260" text-anchor="middle" fill="#cbd5e1" font-size="12">dB = delta.unsqueeze(-1) × B</text>
+    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">A: (D, N) 状态转移矩阵 (通常 A = -exp(A_log))</text>
+    <text x="400" y="300" text-anchor="middle" fill="#10b981" font-size="11">delta 控制每步的时间尺度 (输入依赖)</text>
+  </g>
+
+  <!-- State update -->
+  <g data-code-line="8">
+    <line x1="400" y1="310" x2="400" y2="340" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="350" width="600" height="100" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="375" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">状态更新</text>
+    <text x="400" y="400" text-anchor="middle" fill="#cbd5e1" font-size="12">h_new = dA × h + dB × x.unsqueeze(-1)</text>
+    <text x="400" y="420" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (B, D, N)</text>
+    <text x="400" y="440" text-anchor="middle" fill="#10b981" font-size="11">衰减旧状态 + 注入新输入</text>
+  </g>
+
+  <!-- Output -->
+  <g data-code-line="9">
+    <line x1="400" y1="450" x2="400" y2="480" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="490" width="500" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="515" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">输出计算</text>
+    <text x="400" y="540" text-anchor="middle" fill="#cbd5e1" font-size="12">y = (h_new × C).sum(dim=-1)</text>
+    <text x="400" y="560" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (B, D) - C 选择性地读取状态</text>
+  </g>
+
+  <!-- Selectivity highlight -->
+  <g data-code-line="3,4,5">
+    <rect x="50" y="600" width="700" height="80" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="400" y="625" text-anchor="middle" fill="#ec4899" font-size="14" font-weight="bold">选择性机制 (Mamba 核心创新)</text>
+    <text x="400" y="650" text-anchor="middle" fill="#cbd5e1" font-size="12">B, C, delta 都依赖输入 x，不同位置有不同的参数</text>
+    <text x="400" y="670" text-anchor="middle" fill="#10b981" font-size="11">模型可以选择性地记忆或遗忘信息</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Mamba SSM的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Mamba SSM的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Mamba SSM的基本原理和应用场景</text>
+    <rect x="50" y="700" width="700" height="80" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="725" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="750" text-anchor="middle" fill="#cbd5e1" font-size="12">输入依赖的 SSM 参数，让模型根据内容选择性地处理序列</text>
+    <text x="400" y="770" text-anchor="middle" fill="#cbd5e1" font-size="12">线性复杂度，性能接近 Transformer</text>
   </g>
 </svg>

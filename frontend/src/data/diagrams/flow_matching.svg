@@ -1,18 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Flow Matching</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Flow Matching Loss</text>
+
+  <!-- Source and target -->
+  <g data-code-line="1,2">
+    <rect x="100" y="70" width="250" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="225" y="95" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">源分布 x₀</text>
+    <text x="225" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">通常是噪声 N(0, I)</text>
+    <text x="225" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">起点</text>
+  </g>
+
+  <g data-code-line="1,2">
+    <rect x="450" y="70" width="250" height="80" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="575" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">目标分布 x₁</text>
+    <text x="575" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">真实数据</text>
+    <text x="575" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">终点</text>
+  </g>
+
+  <!-- Flow path -->
+  <g data-code-line="3">
+    <line x1="225" y1="150" x2="400" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <line x1="575" y1="150" x2="400" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="200" y="210" width="400" height="100" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="235" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">直线流路径</text>
+    <text x="400" y="260" text-anchor="middle" fill="#cbd5e1" font-size="12">x_t = (1-t) × x₀ + t × x₁</text>
+    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">t ∈ [0, 1]: 从 x₀ 线性插值到 x₁</text>
+    <text x="400" y="300" text-anchor="middle" fill="#10b981" font-size="11">最简单的概率流 ODE</text>
+  </g>
+
+  <!-- Target velocity -->
+  <g data-code-line="4,5">
+    <line x1="400" y1="310" x2="400" y2="340" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="350" width="500" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="375" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">目标速度场</text>
+    <text x="400" y="400" text-anchor="middle" fill="#cbd5e1" font-size="12">v_target = dx_t/dt = x₁ - x₀</text>
+    <text x="400" y="420" text-anchor="middle" fill="#94a3b8" font-size="11">指向目标的恒定速度</text>
+    <text x="400" y="440" text-anchor="middle" fill="#10b981" font-size="11">模型学习预测这个速度场</text>
+  </g>
+
+  <!-- Loss -->
+  <g data-code-line="6">
+    <line x1="400" y1="450" x2="400" y2="480" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="200" y="490" width="400" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="515" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">Flow Matching Loss</text>
+    <text x="400" y="535" text-anchor="middle" fill="#cbd5e1" font-size="12">L = ||model_output - (x₁ - x₀)||²</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Flow Matching的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Flow Matching的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Flow Matching的基本原理和应用场景</text>
+    <rect x="50" y="570" width="700" height="80" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="595" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="620" text-anchor="middle" fill="#cbd5e1" font-size="12">学习从噪声到数据的直线流，比扩散模型更简单直接</text>
+    <text x="400" y="640" text-anchor="middle" fill="#cbd5e1" font-size="12">无需复杂的噪声调度，训练更稳定</text>
   </g>
 </svg>

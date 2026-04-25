@@ -1,18 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">GRPO Loss</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 750" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">GRPO (Group Relative Policy Optimization) Loss</text>
+
+  <!-- Problem setup -->
+  <g data-code-line="1,2">
+    <rect x="100" y="70" width="600" height="100" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="95" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">问题设定</text>
+    <text x="400" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">同一 prompt 生成多个响应，每个响应有不同奖励</text>
+    <text x="400" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">logps: (B,) 策略对数概率</text>
+    <text x="400" y="160" text-anchor="middle" fill="#94a3b8" font-size="11">rewards: (B,) 奖励分数</text>
+  </g>
+
+  <!-- Group by prompt -->
+  <g data-code-line="3,4">
+    <line x1="400" y1="170" x2="400" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="210" width="600" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="235" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">步骤 1: 按 prompt 分组</text>
+    <text x="400" y="260" text-anchor="middle" fill="#cbd5e1" font-size="12">group_ids: (B,) 标识哪些响应来自同一 prompt</text>
+    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">例如: [0, 0, 0, 1, 1, 2, 2, 2] 表示 3 个 prompt</text>
+    <text x="400" y="300" text-anchor="middle" fill="#10b981" font-size="11">每组内的响应相互竞争</text>
+  </g>
+
+  <!-- Normalize rewards within group -->
+  <g data-code-line="5,6">
+    <line x1="400" y1="310" x2="400" y2="340" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="350" width="600" height="120" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="375" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">步骤 2: 组内归一化奖励</text>
+    <text x="400" y="400" text-anchor="middle" fill="#cbd5e1" font-size="12">对每组: normalized_reward = (reward - mean) / (std + eps)</text>
+    <text x="400" y="420" text-anchor="middle" fill="#94a3b8" font-size="11">消除不同 prompt 的奖励尺度差异</text>
+    <text x="400" y="440" text-anchor="middle" fill="#10b981" font-size="11">只关注组内相对优劣，不关注绝对分数</text>
+    <text x="400" y="460" text-anchor="middle" fill="#94a3b8" font-size="11">eps=1e-5 防止除零</text>
+  </g>
+
+  <!-- Policy gradient loss -->
+  <g data-code-line="7,8">
+    <line x1="400" y1="470" x2="400" y2="500" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="510" width="500" height="100" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="535" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">步骤 3: 策略梯度损失</text>
+    <text x="400" y="560" text-anchor="middle" fill="#cbd5e1" font-size="12">loss = -mean(logps × normalized_rewards)</text>
+    <text x="400" y="580" text-anchor="middle" fill="#94a3b8" font-size="11">增加高奖励响应的概率</text>
+    <text x="400" y="600" text-anchor="middle" fill="#10b981" font-size="11">降低低奖励响应的概率</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">GRPO Loss的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是GRPO Loss的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：GRPO Loss的基本原理和应用场景</text>
+    <rect x="50" y="630" width="700" height="100" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="655" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="680" text-anchor="middle" fill="#cbd5e1" font-size="12">组内相对比较，而非全局绝对奖励</text>
+    <text x="400" y="700" text-anchor="middle" fill="#cbd5e1" font-size="12">消除不同 prompt 难度差异，让模型学习相对优劣</text>
   </g>
 </svg>

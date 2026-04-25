@@ -1,18 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Diffusion Noise Schedule</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 650" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Diffusion Noise Schedules</text>
+
+  <!-- Linear schedule -->
+  <g data-code-line="1,2">
+    <rect x="50" y="70" width="330" height="120" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">Linear Schedule</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">β_t = β_start + (β_end - β_start) × t/T</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">线性增长噪声</text>
+    <text x="215" y="160" text-anchor="middle" fill="#94a3b8" font-size="11">β_start=1e-4, β_end=0.02</text>
+    <text x="215" y="180" text-anchor="middle" fill="#ef4444" font-size="11">早期步骤信噪比不理想</text>
+  </g>
+
+  <!-- Cosine schedule -->
+  <g data-code-line="3,4">
+    <rect x="420" y="70" width="330" height="120" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Cosine Schedule</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">ᾱ_t = cos²((t/T + s)/(1+s) × π/2)</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">平滑的信噪比曲线</text>
+    <text x="585" y="160" text-anchor="middle" fill="#94a3b8" font-size="11">s=0.008 (偏移参数)</text>
+    <text x="585" y="180" text-anchor="middle" fill="#10b981" font-size="11">更好的生成质量</text>
+  </g>
+
+  <!-- Alpha bar computation -->
+  <g data-code-line="5,6">
+    <rect x="100" y="220" width="600" height="100" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="245" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">累积噪声系数 ᾱ_t</text>
+    <text x="400" y="270" text-anchor="middle" fill="#cbd5e1" font-size="12">ᾱ_t = ∏(1 - β_i) for i=0 to t</text>
+    <text x="400" y="290" text-anchor="middle" fill="#94a3b8" font-size="11">或 ᾱ_t = cumprod(1 - β)</text>
+    <text x="400" y="310" text-anchor="middle" fill="#10b981" font-size="11">控制每步的信号保留比例</text>
+  </g>
+
+  <!-- Forward process -->
+  <g data-code-line="7,8">
+    <line x1="400" y1="320" x2="400" y2="350" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="360" width="600" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="385" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">前向扩散过程</text>
+    <text x="400" y="410" text-anchor="middle" fill="#cbd5e1" font-size="12">x_t = √ᾱ_t × x₀ + √(1-ᾱ_t) × ε</text>
+    <text x="400" y="430" text-anchor="middle" fill="#94a3b8" font-size="11">ε ~ N(0, I) 标准高斯噪声</text>
+    <text x="400" y="450" text-anchor="middle" fill="#10b981" font-size="11">ᾱ_t 决定信号/噪声的混合比例</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Diffusion Noise Schedule的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Diffusion Noise Schedule的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Diffusion Noise Schedule的基本原理和应用场景</text>
+    <rect x="50" y="490" width="700" height="140" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="515" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="540" text-anchor="middle" fill="#cbd5e1" font-size="12">噪声调度控制扩散过程的速度和质量</text>
+    <text x="400" y="560" text-anchor="middle" fill="#cbd5e1" font-size="12">• Linear: 简单但早期步骤信噪比不佳</text>
+    <text x="400" y="580" text-anchor="middle" fill="#cbd5e1" font-size="12">• Cosine: 平滑曲线，更好的生成质量</text>
+    <text x="400" y="600" text-anchor="middle" fill="#94a3b8" font-size="11">ᾱ_t 从 1 (纯信号) 衰减到 0 (纯噪声)</text>
   </g>
 </svg>

@@ -1,18 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Multi-Head Latent Attention</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Multi-Head Latent Attention (MLA)</text>
+
+  <!-- Standard MHA -->
+  <g data-code-line="1">
+    <rect x="50" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">标准多头注意力</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">KV 缓存: 2 × num_heads × D_h</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">每个头独立存储 K, V</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">显存占用高</text>
+  </g>
+
+  <!-- MLA -->
+  <g data-code-line="2,3,4">
+    <rect x="420" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">MLA</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">KV 缓存: kv_rank (低秩)</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">共享低秩潜在表示</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">显存节省 10+ 倍</text>
+  </g>
+
+  <!-- Input -->
+  <g data-code-line="1">
+    <rect x="300" y="200" width="200" height="60" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">输入 X</text>
+    <text x="400" y="245" text-anchor="middle" fill="#cbd5e1" font-size="12">(B, S, D)</text>
+  </g>
+
+  <!-- Compress to latent -->
+  <g data-code-line="2,3">
+    <line x1="400" y1="260" x2="400" y2="290" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="300" width="600" height="100" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="325" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">步骤 1: 压缩到低秩潜在空间</text>
+    <text x="400" y="350" text-anchor="middle" fill="#cbd5e1" font-size="12">c_kv = X @ W_dkv</text>
+    <text x="400" y="370" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (B, S, kv_rank)</text>
+    <text x="400" y="390" text-anchor="middle" fill="#10b981" font-size="11">kv_rank << num_heads × D_h (例如 512 vs 4096)</text>
+  </g>
+
+  <!-- Expand to K, V -->
+  <g data-code-line="4,5">
+    <line x1="400" y1="400" x2="400" y2="430" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="440" width="600" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="465" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">步骤 2: 展开为 K, V</text>
+    <text x="400" y="490" text-anchor="middle" fill="#cbd5e1" font-size="12">K = c_kv @ W_uk,  V = c_kv @ W_uv</text>
+    <text x="400" y="510" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (B, S, num_heads × D_h)</text>
+    <text x="400" y="530" text-anchor="middle" fill="#10b981" font-size="11">从共享潜在表示重建 K, V</text>
+  </g>
+
+  <!-- Standard attention -->
+  <g data-code-line="6,7">
+    <line x1="400" y1="540" x2="400" y2="570" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="580" width="500" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="605" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">步骤 3: 标准多头注意力</text>
+    <text x="400" y="625" text-anchor="middle" fill="#cbd5e1" font-size="12">Q = X @ W_q,  Output = MultiHeadAttention(Q, K, V)</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Multi-Head Latent Attention的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Multi-Head Latent Attention的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Multi-Head Latent Attention的基本原理和应用场景</text>
+    <rect x="50" y="660" width="700" height="80" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="685" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想 (DeepSeek-V2)</text>
+    <text x="400" y="710" text-anchor="middle" fill="#cbd5e1" font-size="12">KV 通过低秩瓶颈共享潜在表示，大幅减少 KV 缓存</text>
+    <text x="400" y="730" text-anchor="middle" fill="#cbd5e1" font-size="12">适合长上下文推理，显存占用降低 10+ 倍</text>
   </g>
 </svg>

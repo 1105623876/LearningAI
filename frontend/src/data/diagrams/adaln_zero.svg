@@ -1,18 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Adaptive LayerNorm Zero</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Adaptive LayerNorm Zero (adaLN-Zero)</text>
+
+  <!-- Input -->
+  <g data-code-line="1,2">
+    <rect x="100" y="70" width="250" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="225" y="95" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">输入</text>
+    <text x="225" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">x: (B, N, D) token</text>
+    <text x="225" y="140" text-anchor="middle" fill="#cbd5e1" font-size="12">cond: (B, D) 条件</text>
+  </g>
+
+  <!-- Condition projection -->
+  <g data-code-line="3,4">
+    <rect x="450" y="70" width="250" height="80" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="575" y="95" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">条件投影</text>
+    <text x="575" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">W_ada: (D, 6D)</text>
+    <text x="575" y="140" text-anchor="middle" fill="#cbd5e1" font-size="12">b_ada: (6D,) 零初始化</text>
+  </g>
+
+  <!-- Generate params -->
+  <g data-code-line="5,6">
+    <line x1="400" y1="150" x2="400" y2="180" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="190" width="600" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="400" y="215" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">步骤 1: 生成自适应参数</text>
+    <text x="400" y="240" text-anchor="middle" fill="#cbd5e1" font-size="12">params = cond @ W_ada + b_ada</text>
+    <text x="400" y="260" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (B, 6D)</text>
+    <text x="400" y="280" text-anchor="middle" fill="#10b981" font-size="11">分割为 6 组: γ1, β1, α1, γ2, β2, α2</text>
+  </g>
+
+  <!-- LayerNorm -->
+  <g data-code-line="7,8">
+    <line x1="400" y1="290" x2="400" y2="320" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="330" width="600" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="355" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">步骤 2: LayerNorm + 缩放偏移</text>
+    <text x="400" y="380" text-anchor="middle" fill="#cbd5e1" font-size="12">x_norm = (x - mean) / sqrt(var + eps)</text>
+    <text x="400" y="400" text-anchor="middle" fill="#cbd5e1" font-size="12">x_scaled = γ1 × x_norm + β1</text>
+    <text x="400" y="420" text-anchor="middle" fill="#94a3b8" font-size="11">γ1, β1 是条件依赖的</text>
+  </g>
+
+  <!-- Gate -->
+  <g data-code-line="9,10">
+    <line x1="400" y1="430" x2="400" y2="460" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="470" width="600" height="100" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="495" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">步骤 3: 门控机制 (Zero-Init)</text>
+    <text x="400" y="520" text-anchor="middle" fill="#cbd5e1" font-size="12">out = α1 × x_scaled</text>
+    <text x="400" y="540" text-anchor="middle" fill="#94a3b8" font-size="11">α1 初始化为 0，训练初期跳过该层</text>
+    <text x="400" y="560" text-anchor="middle" fill="#10b981" font-size="11">让模型从恒等映射开始，逐步学习</text>
+  </g>
+
+  <!-- Use case -->
+  <g data-code-line="3,4,5">
+    <rect x="100" y="600" width="600" height="80" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="400" y="625" text-anchor="middle" fill="#ec4899" font-size="14" font-weight="bold">应用场景</text>
+    <text x="400" y="650" text-anchor="middle" fill="#cbd5e1" font-size="12">DiT (Diffusion Transformer): cond = 时间步嵌入 + 类别标签</text>
+    <text x="400" y="670" text-anchor="middle" fill="#94a3b8" font-size="11">根据扩散时间步和类别自适应调整归一化</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Adaptive LayerNorm Zero的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Adaptive LayerNorm Zero的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Adaptive LayerNorm Zero的基本原理和应用场景</text>
+    <rect x="50" y="710" width="700" height="70" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="735" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="760" text-anchor="middle" fill="#cbd5e1" font-size="12">条件依赖的 LayerNorm + 零初始化门控，稳定训练大型扩散模型</text>
   </g>
 </svg>
