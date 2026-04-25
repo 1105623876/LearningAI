@@ -1,18 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Linear Attention</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Linear Self-Attention</text>
+
+  <!-- Standard attention complexity -->
+  <g data-code-line="1">
+    <rect x="50" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="215" y="95" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">标准注意力</text>
+    <text x="215" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">softmax(Q @ K^T) @ V</text>
+    <text x="215" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">复杂度: O(S² × D)</text>
+    <text x="215" y="160" text-anchor="middle" fill="#ef4444" font-size="11">序列长度平方增长</text>
+  </g>
+
+  <!-- Linear attention complexity -->
+  <g data-code-line="2,3,4">
+    <rect x="420" y="70" width="330" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="585" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">线性注意力</text>
+    <text x="585" y="120" text-anchor="middle" fill="#cbd5e1" font-size="12">φ(Q) @ (φ(K)^T @ V)</text>
+    <text x="585" y="140" text-anchor="middle" fill="#94a3b8" font-size="11">复杂度: O(S × D²)</text>
+    <text x="585" y="160" text-anchor="middle" fill="#10b981" font-size="11">序列长度线性增长</text>
+  </g>
+
+  <!-- Kernel feature map -->
+  <g data-code-line="5">
+    <rect x="100" y="200" width="600" height="80" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">核函数特征映射 φ(x)</text>
+    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="13" font-family="monospace">φ(x) = elu(x) + 1</text>
+    <text x="400" y="270" text-anchor="middle" fill="#94a3b8" font-size="11">替代 softmax，保持非负性</text>
+  </g>
+
+  <!-- Computation order -->
+  <g data-code-line="6,7">
+    <line x1="400" y1="280" x2="400" y2="310" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="100" y="320" width="600" height="140" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="345" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">计算顺序重排</text>
+
+    <!-- Step 1 -->
+    <g transform="translate(150, 360)">
+      <rect x="0" y="0" width="200" height="35" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+      <text x="100" y="22" text-anchor="middle" fill="#10b981" font-size="11">1. KV = φ(K)^T @ V</text>
+    </g>
+
+    <!-- Step 2 -->
+    <g transform="translate(150, 405)">
+      <rect x="0" y="0" width="200" height="35" rx="4" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="100" y="22" text-anchor="middle" fill="#f59e0b" font-size="11">2. Output = φ(Q) @ KV</text>
+    </g>
+
+    <!-- Complexity note -->
+    <g transform="translate(380, 370)">
+      <text x="0" y="0" fill="#94a3b8" font-size="11">KV: (D_k, D_v)</text>
+      <text x="0" y="20" fill="#94a3b8" font-size="11">避免 (S, S) 矩阵</text>
+      <text x="0" y="40" fill="#94a3b8" font-size="11">节省内存和计算</text>
+    </g>
+  </g>
+
+  <!-- Normalization -->
+  <g data-code-line="8">
+    <line x1="400" y1="460" x2="400" y2="490" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="500" width="500" height="70" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="525" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">归一化</text>
+    <text x="400" y="550" text-anchor="middle" fill="#cbd5e1" font-size="12">Output / (φ(Q) @ sum(φ(K)) + eps)</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Linear Attention的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Linear Attention的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Linear Attention的基本原理和应用场景</text>
+    <rect x="50" y="600" width="700" height="80" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="625" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="650" text-anchor="middle" fill="#cbd5e1" font-size="12">用核函数 φ 替代 softmax，利用结合律重排计算顺序</text>
+    <text x="400" y="670" text-anchor="middle" fill="#cbd5e1" font-size="12">将 O(S²D) 降至 O(SD²)，适合长序列场景</text>
   </g>
 </svg>

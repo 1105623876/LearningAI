@@ -8,8 +8,8 @@
 
 - **前端**: React 18 + Vite + Tailwind CSS + Monaco Editor
 - **后端**: FastAPI + Python 3.11
-- **数据源**: pyre-code (D:/pyre-code)
-- **测试引擎**: torch_judge (复用 pyre-code)
+- **数据源**: 内置 68 个知识点题目（来自 pyre-code，MIT 协议）
+- **测试引擎**: 内置 torch_judge 测试引擎
 
 ## 快速开始
 
@@ -42,7 +42,11 @@ LearningAI/
 │   ├── api/          # API 路由
 │   │   ├── concepts.py   # 知识点 API
 │   │   └── practice.py   # 实践模式 API
-│   ├── utils/        # 工具函数（pyre_loader）
+│   ├── data/         # 数据文件
+│   │   └── paths.json    # 学习路径配置
+│   ├── torch_judge/  # 测试引擎
+│   │   └── tasks/        # 68 个题目定义
+│   ├── utils/        # 工具函数
 │   ├── main.py       # 入口
 │   └── start.bat     # 启动脚本（Windows）
 ├── frontend/         # React 前端
@@ -125,15 +129,15 @@ LearningAI/
 
 ## 开发指南
 
-### 启动后端（需要 pyre-code 环境）
+### 启动后端
 
 ```bash
 cd backend
 # Windows
 start.bat
 
-# 或手动启动
-call D:\Miniconda3\Scripts\activate.bat pyre
+# 或手动启动（需要 PyTorch 环境）
+conda activate pyre  # 或其他包含 PyTorch 的环境
 python main.py
 ```
 
@@ -158,5 +162,5 @@ npm run dev
 
 ## 致谢
 
-- 题目数据和测试引擎来自 [pyre-code](https://github.com/whwangovo/pyre-code)
+- 题目数据和测试引擎来自 [pyre-code](https://github.com/whwangovo/pyre-code)（MIT 协议）
 - 基于 [TorchCode](https://github.com/duoan/TorchCode) 的 torch_judge

@@ -1,16 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
-import sys
-from pathlib import Path
-
-# 添加 pyre-code 路径以导入 torch_judge
-pyre_code_path = Path("D:/pyre-code")
-if str(pyre_code_path) not in sys.path:
-    sys.path.insert(0, str(pyre_code_path))
 
 try:
-    from torch_judge.tasks import get_task
+    from torch_judge import get_task
 except ImportError:
     get_task = None
 

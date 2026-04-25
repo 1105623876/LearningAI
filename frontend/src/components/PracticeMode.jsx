@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react'
 import Editor from '@monaco-editor/react'
 
+function formatMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/`([^`]+)`/g, '<code class="bg-slate-700 px-1.5 py-0.5 rounded text-amber-300">$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold text-amber-200">$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
+    .replace(/\n/g, '<br/>')
+}
+
 export default function PracticeMode({ conceptId, concept }) {
   const [task, setTask] = useState(null)
   const [code, setCode] = useState('')
@@ -88,7 +97,10 @@ export default function PracticeMode({ conceptId, concept }) {
               renderLineHighlight: 'line',
               smoothScrolling: true,
               cursorBlinking: 'smooth',
-              bracketPairColorization: { enabled: true }
+              bracketPairColorization: { enabled: true },
+              readOnly: false,
+              domReadOnly: false,
+              contextmenu: true
             }}
           />
         </div>
@@ -127,7 +139,10 @@ export default function PracticeMode({ conceptId, concept }) {
             </svg>
             提示
           </h3>
-          <p className="text-slate-300 text-sm">{task.hint}</p>
+          <div
+            className="text-slate-300 text-sm prose prose-invert prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: formatMarkdown(task.hint) }}
+          />
         </div>
       )}
 

@@ -1,18 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" class="w-full h-auto">
-  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Contrastive Loss</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" class="w-full h-auto">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" fill="#e2e8f0" font-size="24" font-weight="bold">Contrastive Loss (InfoNCE)</text>
+
+  <!-- Query embeddings -->
+  <g data-code-line="2">
+    <rect x="50" y="70" width="300" height="80" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="200" y="95" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">Query Embeddings (q)</text>
+    <text x="200" y="115" text-anchor="middle" fill="#cbd5e1" font-size="12">q[0], q[1], q[2], ..., q[N-1]</text>
+    <text x="200" y="135" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (N, D) - L2 normalized</text>
+  </g>
+
+  <!-- Key embeddings -->
+  <g data-code-line="2">
+    <rect x="450" y="70" width="300" height="80" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="600" y="95" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Key Embeddings (k)</text>
+    <text x="600" y="115" text-anchor="middle" fill="#cbd5e1" font-size="12">k[0], k[1], k[2], ..., k[N-1]</text>
+    <text x="600" y="135" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (N, D) - L2 normalized</text>
+  </g>
+
+  <!-- Similarity matrix computation -->
+  <g data-code-line="3">
+    <line x1="200" y1="150" x2="400" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <line x1="600" y1="150" x2="400" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="250" y="210" width="300" height="120" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="400" y="235" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">Similarity Matrix</text>
+    <text x="400" y="255" text-anchor="middle" fill="#cbd5e1" font-size="12">logits = (q @ k.T) / temperature</text>
+    <text x="400" y="275" text-anchor="middle" fill="#94a3b8" font-size="11">Shape: (N, N)</text>
+
+    <!-- Matrix visualization -->
+    <g transform="translate(320, 285)">
+      <rect x="0" y="0" width="30" height="30" fill="#10b981" opacity="0.3" stroke="#10b981"/>
+      <rect x="35" y="0" width="30" height="30" fill="#ef4444" opacity="0.2" stroke="#ef4444"/>
+      <rect x="70" y="0" width="30" height="30" fill="#ef4444" opacity="0.2" stroke="#ef4444"/>
+      <rect x="105" y="0" width="30" height="30" fill="#ef4444" opacity="0.2" stroke="#ef4444"/>
+      <text x="15" y="18" text-anchor="middle" fill="#fff" font-size="10">✓</text>
+      <text x="50" y="18" text-anchor="middle" fill="#fff" font-size="10">✗</text>
+      <text x="85" y="18" text-anchor="middle" fill="#fff" font-size="10">✗</text>
+      <text x="120" y="18" text-anchor="middle" fill="#fff" font-size="10">✗</text>
+    </g>
+  </g>
+
+  <!-- Loss computation -->
+  <g data-code-line="6,7,8,9">
+    <line x1="400" y1="330" x2="400" y2="380" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+    <rect x="150" y="390" width="500" height="140" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="415" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">Cross-Entropy Loss</text>
+
+    <text x="400" y="440" text-anchor="middle" fill="#cbd5e1" font-size="11">For each query i:</text>
+    <text x="400" y="460" text-anchor="middle" fill="#cbd5e1" font-size="11">log_sum_exp = logsumexp(logits[i])</text>
+    <text x="400" y="480" text-anchor="middle" fill="#cbd5e1" font-size="11">positive_logit = logits[i, i]</text>
+    <text x="400" y="500" text-anchor="middle" fill="#cbd5e1" font-size="11">log_p[i] = positive_logit - log_sum_exp</text>
+    <text x="400" y="520" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">Loss = -mean(log_p)</text>
+  </g>
+
+  <!-- Key insight -->
   <g data-code-line="1,2,3">
-    <rect x="100" y="60" width="600" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-    <text x="400" y="95" text-anchor="middle" fill="#f1f5f9" font-size="16">Contrastive Loss的核心概念</text>
-    <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="13">详细图解正在完善中</text>
-  </g>
-  <g data-code-line="4,5,6">
-    <rect x="100" y="160" width="600" height="250" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="400" y="200" text-anchor="middle" fill="#a855f7" font-size="14" font-weight="bold">概念说明:</text>
-    <text x="400" y="250" text-anchor="middle" fill="#cbd5e1" font-size="12">这是Contrastive Loss的可视化图解</text>
-    <text x="400" y="280" text-anchor="middle" fill="#94a3b8" font-size="11">包含核心算法和实现细节</text>
-    <text x="400" y="310" text-anchor="middle" fill="#94a3b8" font-size="11">点击图中元素可查看对应代码</text>
-  </g>
-  <g transform="translate(50, 435)">
-    <text x="0" y="0" fill="#94a3b8" font-size="11">核心思想：Contrastive Loss的基本原理和应用场景</text>
+    <rect x="50" y="560" width="700" height="110" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="585" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">核心思想</text>
+    <text x="400" y="610" text-anchor="middle" fill="#cbd5e1" font-size="12">• 正样本对 (q[i], k[i]) 应该相似度高（对角线元素）</text>
+    <text x="400" y="630" text-anchor="middle" fill="#cbd5e1" font-size="12">• 负样本对 (q[i], k[j]) 应该相似度低（非对角线元素）</text>
+    <text x="400" y="650" text-anchor="middle" fill="#cbd5e1" font-size="12">• 用于 CLIP、SimCLR 等对比学习框架</text>
   </g>
 </svg>

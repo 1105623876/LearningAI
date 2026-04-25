@@ -1,13 +1,15 @@
-import sys
 import json
 from pathlib import Path
 from typing import Dict, List, Any
 
-PYRE_CODE_PATH = Path("D:/pyre-code")
+# 使用项目内部的数据路径
+BACKEND_PATH = Path(__file__).parent.parent
+DATA_PATH = BACKEND_PATH / "data"
+TORCH_JUDGE_PATH = BACKEND_PATH / "torch_judge"
 
 def load_paths() -> List[Dict[str, Any]]:
-    """从 pyre-code 加载学习路径配置"""
-    paths_file = PYRE_CODE_PATH / "web/src/lib/paths.json"
+    """加载学习路径配置"""
+    paths_file = DATA_PATH / "paths.json"
     if not paths_file.exists():
         raise FileNotFoundError(f"paths.json not found at {paths_file}")
 
@@ -16,18 +18,12 @@ def load_paths() -> List[Dict[str, Any]]:
     return data.get("paths", [])
 
 def load_tasks() -> Dict[str, Dict[str, Any]]:
-    """从 pyre-code 加载所有题目定义"""
-    tasks_dir = PYRE_CODE_PATH / "torch_judge/tasks"
-    if not tasks_dir.exists():
-        raise FileNotFoundError(f"tasks directory not found at {tasks_dir}")
-
-    sys.path.insert(0, str(PYRE_CODE_PATH))
-
+    """加载所有题目定义"""
     try:
         from torch_judge.tasks._registry import TASKS
         return TASKS
     except ImportError as e:
-        raise ImportError(f"Failed to import TASKS from pyre-code: {e}")
+        raise ImportError(f"Failed to import TASKS: {e}")
 
 def build_concepts_index() -> List[Dict[str, Any]]:
     """构建知识点索引"""
